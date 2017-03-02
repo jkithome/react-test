@@ -1,0 +1,21 @@
+{
+  "name": "react-test",
+  "version": "1.0.0",
+  "description": "Example for testing react reduc apps",
+  "main": "index.js",
+  "scripts": {
+    "server": "./node_modules/babel-cli/bin/babel-node.js --presets node6 index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jeremy Kithome",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.0",
+    "cors": "^2.8.1",
+    "express": "^4.15.0",
+    "lodash": "^4.17.4",
+    "mongoose": "^4.8.5",
+    "node-json-db": "^0.7.3",
+    "uuid": "^3.0.1"
+  }
+}
