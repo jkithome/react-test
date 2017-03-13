@@ -26,15 +26,52 @@ class TodoList extends React.Component {
   }
 
   render() {
+    var pStyles = {
+      textAlign: 'center',
+      textDecoration: 'underline',
+      fontSize: 'larger',
+      fontWeight: 'bold',
+      textTransform: 'uppercase'
+    }
     return (
-      <div id="app">
-        <h1 className="ui dividing centered header">React Testing Todo App</h1>
-        <div className='ui three column centered grid'>
-          <div className='column'>
-            <p className="tasks">Completed Tasks: {this.state.todos.filter(todo => {return todo.done === true}).length}</p>
-            <p className="tasks">Pending Tasks: {this.state.todos.filter(todo => {return todo.done === false}).length}</p>
-            {this.state.todos.map( todo => {
-              return <Todo key={todo.id} todo={todo} />
+      <div>
+        <nav>
+          {/*<div className="nav-wrapper teal">
+            <a href="#" className="brand-logo"><img style={{height: '60px', width: '60px' }}className="logo-img" src="/src/images/React-icon.svg" />Testing React Apps</a>
+          </div>*/}
+          <div className="nav-wrapper teal">
+            <a href="#" className="brand-logo" style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+              <img className="logo-img" src="/src/images/React-icon.svg" style={{height: '64px', width: '64px'}} />Testing React Apps
+            </a>
+            <ul className="right">
+              <li><a><i className="material-icons tooltipped" style={{fontSize: '40px'}} data-position="bottom" data-delay="50" data-tooltip="Create Document">note_add</i></a></li>
+            </ul>
+          </div>
+        </nav>
+        <div className="container">
+          <div className="section section-title">
+            <h5 className="white-text shadow">TODOS</h5>
+          </div>
+          <p className="tasks" style={pStyles}>Completed Tasks: {this.state.todos.filter(todo => {return todo.done === true}).length}</p>
+          <p className="tasks" style={pStyles}>Pending Tasks: {this.state.todos.filter(todo => {return todo.done === false}).length}</p>
+          <div className="row isotope" style={{position: 'relative'}}>
+            {this.state.todos.map(todo => {
+              return (
+                <div className="col s12 m12 l4" style={{top: '0px'}} key={todo.id}>
+                  <div className="card">
+                    <div className="card-image waves-effect waves-block waves-light">
+                      <a href={'/docs/' + todo.id}>
+                        <img width="320" height="240" src={"/src/images/image" + Math.ceil(Math.random() * 10) + ".jpg"} className=" wp-post-image" alt={todo.title} title={todo.title} /> </a>
+                    </div>
+                    <div className="card-content">
+                      <a href={'/docs/' + todo._id}><p className="teal-text card-heading">{todo.title}</p></a>
+                      <p className="genre-text">Project: {todo.project}</p>
+                      <p>Status: {todo.done ? 'Complete' : 'Pending'}</p>
+                      <p className="date-text">Created: {moment(todo.createdAt).fromNow()}</p>
+                    </div>
+                  </div>
+                </div>
+              )
             })}
           </div>
         </div>
