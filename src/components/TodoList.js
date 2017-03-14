@@ -21,8 +21,21 @@ class TodoList extends React.Component {
           "createdAt": "2017-03-02T23:04:38.003Z",
           "modifiedAt": "2017-03-02T23:05:30.133Z"
         }
-      ]
+      ],
+      todo: {
+        title: '',
+        project: ''
+      }
     }
+    this.handleFieldChange = this.handleFieldChange.bind(this);
+  }
+
+  handleFieldChange(e) {
+    var field = e.target.name;
+    var value = e.target.value;
+    // var _todo = this.state.todo;
+    // var todo = Object.assign({}, _todo, {[field]: value});
+    this.setState({todo: {[field]: value}});
   }
 
   render() {
@@ -32,19 +45,90 @@ class TodoList extends React.Component {
       fontSize: 'larger',
       fontWeight: 'bold',
       textTransform: 'uppercase'
-    }
+    };
+    var buttonStyles = {
+      margin: '10px 0'
+    };
     return (
       <div>
         <nav>
           {/*<div className="nav-wrapper teal">
             <a href="#" className="brand-logo"><img style={{height: '60px', width: '60px' }}className="logo-img" src="/src/images/React-icon.svg" />Testing React Apps</a>
           </div>*/}
-          <div className="nav-wrapper teal">
+          <div className="nav-wrapper black">
             <a href="#" className="brand-logo" style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
               <img className="logo-img" src="/src/images/React-icon.svg" style={{height: '64px', width: '64px'}} />Testing React Apps
             </a>
             <ul className="right">
-              <li><a><i className="material-icons tooltipped" style={{fontSize: '40px'}} data-position="bottom" data-delay="50" data-tooltip="Create Document">note_add</i></a></li>
+              <li><a href="#modal1"><i className="material-icons tooltipped" style={{fontSize: '40px'}} data-position="bottom" data-delay="50" data-tooltip="Create Document">note_add</i></a></li>
+              <div id="modal1" className="modal">
+                {/*<div className="container">
+                  <div className="card-panel white" >
+                    <div className="row">
+                      <h2 className="center-align">Create Document</h2>
+                    </div>
+                    <form className="col s10 offset-s1">
+                      <div className="row">
+                        <div className="col s6 offset-s3">
+                          <label htmlFor="title">Title</label>
+                          <input className="teal-text" id="title"
+                            name="title"
+                            onChange={this.handleFieldChange}
+                            type="text"
+                          />
+                        </div>
+                      </div>
+                      <div className="row">
+                        <div className="col s6 offset-s3">
+                          <label htmlFor="genre">Genre</label>
+                          <input className="teal-text" id="genre"
+                            name="genre"
+                            onChange={this.handleFieldChange}
+                            type="text"
+                          />
+                        </div>
+                      </div>
+                      <div className="row">
+                        <div className="col s6 offset-s3">
+                          <label htmlFor="content">Content</label>
+                          <textarea name="content" id="content" className="materialize-textarea teal-text" onChange={this.handleFieldChange}></textarea>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>*/}
+                <div>
+                  <div className="row">
+                    <h2 className="center-align">Create Todo</h2>
+                  </div>
+                  <form className="col s10 offset-s1">
+                    <div className="row">
+                      <div className="col s8 offset-s2">
+                        <label htmlFor="title">Title</label>
+                        <input className="teal-text" id="title"
+                          name="title"
+                          onChange={this.handleFieldChange}
+                          type="text"
+                        />
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col s8 offset-s2">
+                        <label htmlFor="project">Project</label>
+                        <input className="teal-text" id="project"
+                          name="project"
+                          onChange={this.handleFieldChange}
+                          type="text"
+                        />
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div className="modal-footer">
+                  <a href="#!" className="modal-action modal-close waves-effect waves-red btn-flat ">Close</a>
+                  <a href="#!" className="modal-action modal-close waves-effect waves-green btn-flat ">Create</a>
+                </div>
+              </div>
             </ul>
           </div>
         </nav>
@@ -66,8 +150,16 @@ class TodoList extends React.Component {
                     <div className="card-content">
                       <a href={'/docs/' + todo._id}><p className="teal-text card-heading">{todo.title}</p></a>
                       <p className="genre-text">Project: {todo.project}</p>
-                      <p>Status: {todo.done ? 'Complete' : 'Pending'}</p>
                       <p className="date-text">Created: {moment(todo.createdAt).fromNow()}</p>
+                      {/*<p>Status: {todo.done ? 'Complete' : 'Pending'}</p>*/}
+                      <form action="#">
+                        <p>
+                          <input type="checkbox" id={todo.id} defaultChecked={todo.done}/>
+                          <label htmlFor={todo.id}>{todo.done ? 'Mark Incomplete' : 'Mark Completed'}</label>
+                        </p>
+                      </form>
+                      <a className="waves-effect waves-light btn tooltipped teal" style={buttonStyles} data-position="bottom" data-delay="50" data-tooltip="Edit"><i className="material-icons" >mode_edit</i></a>
+                      <a className="waves-effect waves-light btn right tooltipped red" style={buttonStyles} data-position="bottom" data-delay="50" data-tooltip="Delete"><i className="material-icons">delete</i></a>
                     </div>
                   </div>
                 </div>
