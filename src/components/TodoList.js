@@ -31,14 +31,23 @@ class TodoList extends React.Component {
     }
     this.handleFieldChange = this.handleFieldChange.bind(this);
     this.handleFieldEdit = this.handleFieldEdit.bind(this);
+    this.handleCreate = this.handleCreate.bind(this);
   }
 
   handleFieldChange(e) {
     var field = e.target.name;
     var value = e.target.value;
-    // var _todo = this.state.todo;
-    // var todo = Object.assign({}, _todo, {[field]: value});
-    this.setState({todo: {[field]: value}});
+    var _todo = this.state.todo;
+    var todo = Object.assign({}, _todo, {[field]: value});
+    this.setState({todo: todo});
+  }
+
+  handleCreate() {
+    var todo = this.state.todo;
+    todo = Object.assign({}, todo, {done: false, createdAt: new Date(), modifiedAt: new Date(), id: Math.floor(Math.random() * 10000000)});
+    var todos = this.state.todos;
+    todos.push(todo);
+    this.setState({todos: todos})
   }
 
   handleFieldEdit(e) {
@@ -141,8 +150,8 @@ class TodoList extends React.Component {
                   </form>
                 </div>
                 <div className="modal-footer">
-                  <a href="#!" className="modal-action modal-close waves-effect waves-red btn-flat ">Close</a>
-                  <a href="#!" className="modal-action modal-close waves-effect waves-green btn-flat ">Create</a>
+                  <a href="#!" className="modal-action modal-close waves-effect waves-red btn-flat">Close</a>
+                  <a href="#!" className="modal-action modal-close waves-effect waves-green btn-flat" onClick={this.handleCreate}>Create</a>
                 </div>
               </div>
             </ul>
