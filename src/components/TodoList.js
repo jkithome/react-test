@@ -25,9 +25,12 @@ class TodoList extends React.Component {
       todo: {
         title: '',
         project: ''
+      },
+      editedTodo: {
       }
     }
     this.handleFieldChange = this.handleFieldChange.bind(this);
+    this.handleFieldEdit = this.handleFieldEdit.bind(this);
   }
 
   handleFieldChange(e) {
@@ -36,6 +39,14 @@ class TodoList extends React.Component {
     // var _todo = this.state.todo;
     // var todo = Object.assign({}, _todo, {[field]: value});
     this.setState({todo: {[field]: value}});
+  }
+
+  handleFieldEdit(e) {
+    var field = e.target.name;
+    var value = e.target.value;
+    var _todo = this.state.editedTodo;
+    var todo = Object.assign({}, _todo, {[field]: value});
+    this.setState({editedTodo: todo});
   }
 
   render() {
@@ -49,6 +60,11 @@ class TodoList extends React.Component {
     var buttonStyles = {
       margin: '10px 0'
     };
+
+    var h2Styles = {
+      color: 'black',
+      margin: '30px 0'
+    }
     return (
       <div>
         <nav>
@@ -99,7 +115,7 @@ class TodoList extends React.Component {
                 </div>*/}
                 <div>
                   <div className="row">
-                    <h2 className="center-align">Create Todo</h2>
+                    <h2 className="center-align" style={h2Styles}>Create Todo</h2>
                   </div>
                   <form className="col s10 offset-s1">
                     <div className="row">
@@ -158,7 +174,42 @@ class TodoList extends React.Component {
                           <label htmlFor={todo.id}>{todo.done ? 'Mark Incomplete' : 'Mark Completed'}</label>
                         </p>
                       </form>
-                      <a className="waves-effect waves-light btn tooltipped teal" style={buttonStyles} data-position="bottom" data-delay="50" data-tooltip="Edit"><i className="material-icons" >mode_edit</i></a>
+                      <a href={'#' + todo.id} className="waves-effect waves-light btn tooltipped teal" style={buttonStyles} data-position="bottom" data-delay="50" data-tooltip="Edit"><i className="material-icons" >mode_edit</i></a>
+                      <div id={todo.id} className="modal">
+                        <div>
+                          <div className="row">
+                            <h2 className="center-align" style={h2Styles}>Edit Todo</h2>
+                          </div>
+                          <form className="col s10 offset-s1">
+                            <div className="row">
+                              <div className="col s8 offset-s2">
+                                <label htmlFor="title">Title</label>
+                                <input className="teal-text" id="title"
+                                  name="title"
+                                  defaultValue={todo.title}
+                                  onChange={this.handleFieldEdit}
+                                  type="text"
+                                />
+                              </div>
+                            </div>
+                            <div className="row">
+                              <div className="col s8 offset-s2">
+                                <label htmlFor="project">Project</label>
+                                <input className="teal-text" id="project"
+                                  name="project"
+                                  defaultValue={todo.project}
+                                  onChange={this.handleFieldEdit}
+                                  type="text"
+                                />
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                        <div className="modal-footer">
+                          <a href="#!" className="modal-action modal-close waves-effect waves-red btn-flat ">Cancel</a>
+                          <a href="#!" className="modal-action modal-close waves-effect waves-green btn-flat ">Edit</a>
+                        </div>
+                      </div>
                       <a className="waves-effect waves-light btn right tooltipped red" style={buttonStyles} data-position="bottom" data-delay="50" data-tooltip="Delete"><i className="material-icons">delete</i></a>
                     </div>
                   </div>
