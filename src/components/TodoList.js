@@ -32,6 +32,7 @@ class TodoList extends React.Component {
     this.handleFieldChange = this.handleFieldChange.bind(this);
     this.handleFieldEdit = this.handleFieldEdit.bind(this);
     this.handleCreate = this.handleCreate.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
   }
 
   handleFieldChange(e) {
@@ -48,6 +49,19 @@ class TodoList extends React.Component {
     var todos = this.state.todos;
     todos.push(todo);
     this.setState({todos: todos})
+  }
+
+  handleEdit(id) {
+    var editedTodo = this.state.editedTodo
+    var todos = this.state.todos;
+    var newTodos = todos.map(todo => {
+      if (todo.id === id) {
+        return Object.assign({}, todo, editedTodo)
+      } else {
+        return todo;
+      }
+    });
+    this.setState({todos: newTodos});
   }
 
   handleFieldEdit(e) {
@@ -215,8 +229,8 @@ class TodoList extends React.Component {
                           </form>
                         </div>
                         <div className="modal-footer">
-                          <a href="#!" className="modal-action modal-close waves-effect waves-red btn-flat ">Cancel</a>
-                          <a href="#!" className="modal-action modal-close waves-effect waves-green btn-flat ">Edit</a>
+                          <a href="#!" className="modal-action modal-close waves-effect waves-red btn-flat">Cancel</a>
+                          <a href="#!" className="modal-action modal-close waves-effect waves-green btn-flat" onClick={this.handleEdit.bind(null, todo.id)}>Edit</a>
                         </div>
                       </div>
                       <a className="waves-effect waves-light btn right tooltipped red" style={buttonStyles} data-position="bottom" data-delay="50" data-tooltip="Delete"><i className="material-icons">delete</i></a>
