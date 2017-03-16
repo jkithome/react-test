@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import moment from 'moment'
 import { Modal, Header, Actions } from 'semantic-ui-react'
 import ReactDOM from 'react-dom'
 
@@ -182,10 +183,10 @@ class TodoList extends Component {
               </Modal.Content>
               <Modal.Actions>
                 <button className='ui inverted green button' onClick={this.handleCreate}>
-                  <i className='checkmark'></i> Create
+                  <i className='checkmark icon'></i> Create
                 </button>
                 <button className='ui inverted red button' onClick={this.handleCreateClose}>
-                  <i className='remove'></i> Cancel
+                  <i className='remove icon'></i> Cancel
                 </button>
               </Modal.Actions>
             </Modal>
@@ -200,7 +201,7 @@ class TodoList extends Component {
                   <div className="content">
                     <div className="header">{todo.title}</div>
                     <div className="meta">{todo.project}</div>
-                    <div className="meta">Created 10 days ago</div>
+                    <div className="meta">Created {moment(todo.createdAt).fromNow()}</div>
                   </div>
                   <div className="extra content">
                     <div>
@@ -237,10 +238,10 @@ class TodoList extends Component {
                           </Modal.Content>
                           <Modal.Actions>
                             <button className='ui inverted green button' onClick={this.handleEdit.bind(null, todo.id)}>
-                              <i className='checkmark'></i> Update
+                              <i className='checkmark icon'></i> Update
                             </button>
                             <button className='ui inverted red button' onClick={this.handleEditClose}>
-                              <i className='remove'></i> Cancel
+                              <i className='remove icon'></i> Cancel
                             </button>
                           </Modal.Actions>
                         </Modal>
