@@ -1,6 +1,8 @@
-// import React, { Component } from 'react';
+import React, { Component } from 'react'
+import { Modal, Header, Actions } from 'semantic-ui-react'
+import ReactDOM from 'react-dom'
 
-class TodoList extends React.Component {
+class TodoList extends Component {
   constructor() {
     super();
     this.state = {
@@ -17,6 +19,22 @@ class TodoList extends React.Component {
           "id": "7ae5bfa3-f0d4-4fd3-8a9b-61676d67a3c8",
           "title": "Todo1",
           "project": "Project",
+          "done": false,
+          "createdAt": "2017-03-02T23:04:38.003Z",
+          "modifiedAt": "2017-03-02T23:05:30.133Z"
+        },
+        {
+          "id": "7ae5bfa3-f0d4-4fd3-8a9b-61676d67a3c7",
+          "title": "Todo5",
+          "project": "Project5",
+          "done": true,
+          "createdAt": "2017-03-02T23:04:38.003Z",
+          "modifiedAt": "2017-03-02T23:05:30.133Z"
+        },
+        {
+          "id": "7ae5bfa3-f0d4-4fd3-8a9b-61676d67a3c6",
+          "title": "Todo6",
+          "project": "Project6",
           "done": true,
           "createdAt": "2017-03-02T23:04:38.003Z",
           "modifiedAt": "2017-03-02T23:05:30.133Z"
@@ -26,13 +44,45 @@ class TodoList extends React.Component {
         title: '',
         project: ''
       },
-      editedTodo: {
-      }
+      editedTodo: {},
+      createModalOpen: false,
+      editModalOpen: false,
+      openModal: null,
     }
+    this.handleItemClick = this.handleItemClick.bind(this);
+    this.handleCreateOpen = this.handleCreateOpen.bind(this);
+    this.handleCreateClose = this.handleCreateClose.bind(this);
+    this.handleEditOpen = this.handleEditOpen.bind(this);
+    this.handleEditClose = this.handleEditClose.bind(this);
     this.handleFieldChange = this.handleFieldChange.bind(this);
-    this.handleFieldEdit = this.handleFieldEdit.bind(this);
     this.handleCreate = this.handleCreate.bind(this);
+    this.handleFieldEdit = this.handleFieldEdit.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.handleToggle = this.handleToggle.bind(this);
+  }
+
+  handleItemClick(e, { name }) {
+    this.setState({ activeItem: name });
+  }
+
+  handleCreateOpen() {
+    this.setState({createModalOpen: true});
+  }
+
+  handleCreateClose() {
+    this.setState({createModalOpen: false});
+  }
+
+  handleEditOpen(id) {
+    this.setState({editModalOpen: true});
+    this.setState({openModal: id})
+  }
+
+  handleEditClose() {
+    this.setState({editModalOpen: false});
+    this.setState({openModal: null});
+    this.setState({editedTodo: {}});
   }
 
   handleFieldChange(e) {
@@ -49,6 +99,15 @@ class TodoList extends React.Component {
     var todos = this.state.todos;
     todos.push(todo);
     this.setState({todos: todos})
+    this.handleCreateClose();
+  }
+
+  handleFieldEdit(e) {
+    var field = e.target.name;
+    var value = e.target.value;
+    var _todo = this.state.editedTodo;
+    var todo = Object.assign({}, _todo, {[field]: value});
+    this.setState({editedTodo: todo});
   }
 
   handleEdit(id) {
@@ -61,269 +120,143 @@ class TodoList extends React.Component {
         return todo;
       }
     });
+    this.setState({editedTodo: {}});
+    this.setState({todos: newTodos});
+    this.handleEditClose();
+  }
+
+  handleDelete(id) {
+    var todos = this.state.todos;
+    var newTodos = todos.filter(todo => {
+      return todo.id !== id;
+    });
     this.setState({todos: newTodos});
   }
 
-  handleFieldEdit(e) {
-    var field = e.target.name;
-    var value = e.target.value;
-    var _todo = this.state.editedTodo;
-    var todo = Object.assign({}, _todo, {[field]: value});
-    this.setState({editedTodo: todo});
+  handleToggle(id) {
+    var todos = this.state.todos;
+    var newTodos = todos.map(todo => {
+      if (todo.id === id) {
+        return Object.assign({}, todo, {done: !todo.done})
+      } else {
+        return todo;
+      }
+    });
+    this.setState({todos: newTodos});
   }
 
   render() {
-    var pStyles = {
-      textAlign: 'center',
-      textDecoration: 'underline',
-      fontSize: 'larger',
-      fontWeight: 'bold',
-      textTransform: 'uppercase'
-    };
-    var buttonStyles = {
-      margin: '10px 0'
-    };
+    const { activeItem } = this.state
 
-    var h2Styles = {
-      color: 'black',
-      margin: '30px 0'
-    }
     return (
       <div>
-        <nav>
-          {/*<div className="nav-wrapper teal">
-            <a href="#" className="brand-logo"><img style={{height: '60px', width: '60px' }}className="logo-img" src="/src/images/React-icon.svg" />Testing React Apps</a>
-          </div>*/}
-          <div className="nav-wrapper black">
-            <a href="#" className="brand-logo" style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-              <img className="logo-img" src="/src/images/React-icon.svg" style={{height: '64px', width: '64px'}} />Testing React Apps
-            </a>
-            <ul className="right">
-              <li><a href="#modal1"><i className="material-icons tooltipped" style={{fontSize: '40px'}} data-position="bottom" data-delay="50" data-tooltip="Create Document">note_add</i></a></li>
-              <div id="modal1" className="modal">
-                {/*<div className="container">
-                  <div className="card-panel white" >
-                    <div className="row">
-                      <h2 className="center-align">Create Document</h2>
-                    </div>
-                    <form className="col s10 offset-s1">
-                      <div className="row">
-                        <div className="col s6 offset-s3">
-                          <label htmlFor="title">Title</label>
-                          <input className="teal-text" id="title"
-                            name="title"
-                            onChange={this.handleFieldChange}
-                            type="text"
-                          />
-                        </div>
-                      </div>
-                      <div className="row">
-                        <div className="col s6 offset-s3">
-                          <label htmlFor="genre">Genre</label>
-                          <input className="teal-text" id="genre"
-                            name="genre"
-                            onChange={this.handleFieldChange}
-                            type="text"
-                          />
-                        </div>
-                      </div>
-                      <div className="row">
-                        <div className="col s6 offset-s3">
-                          <label htmlFor="content">Content</label>
-                          <textarea name="content" id="content" className="materialize-textarea teal-text" onChange={this.handleFieldChange}></textarea>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                </div>*/}
-                <div>
-                  <div className="row">
-                    <h2 className="center-align" style={h2Styles}>Create Todo</h2>
-                  </div>
-                  <form className="col s10 offset-s1">
-                    <div className="row">
-                      <div className="col s8 offset-s2">
-                        <label htmlFor="title">Title</label>
-                        <input className="teal-text" id="title"
-                          name="title"
-                          onChange={this.handleFieldChange}
-                          type="text"
-                        />
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col s8 offset-s2">
-                        <label htmlFor="project">Project</label>
-                        <input className="teal-text" id="project"
-                          name="project"
-                          onChange={this.handleFieldChange}
-                          type="text"
-                        />
-                      </div>
-                    </div>
-                  </form>
+        <div className="ui inverted segment" style={{borderRadius: '0px'}}>
+          <h1 className="ui grey inverted center aligned header">
+            <img className="ui large centered image" src="../src/images/React-icon.svg" />
+            <div className="content">React Testing</div>
+          </h1>
+        </div>
+        <div className="ui centered container one column grid">
+          <div className="column" style={{textAlign: 'center'}}>
+            <Modal
+              trigger={
+                <div className="ui icon button" data-tooltip="Create New Todo" data-position="bottom center" onClick={this.handleCreateOpen}>
+                  <i className="add icon"></i>
                 </div>
-                <div className="modal-footer">
-                  <a href="#!" className="modal-action modal-close waves-effect waves-red btn-flat">Close</a>
-                  <a href="#!" className="modal-action modal-close waves-effect waves-green btn-flat" onClick={this.handleCreate}>Create</a>
+              }
+              open={this.state.createModalOpen}
+              onClose={this.handleCreateClose}
+            >
+              <Modal.Header>Create Todo</Modal.Header>
+              <Modal.Content>
+                <div className='ui form'>
+                  <div className='field'>
+                    <label>Title</label >
+                    <input type='text' name="title" onChange={this.handleFieldChange} />
+                  </div>
+                  <div className='field'>
+                    <label>Project</label>
+                    <input type='text' name="project" onChange={this.handleFieldChange} />
+                  </div>
                 </div>
-              </div>
-            </ul>
+              </Modal.Content>
+              <Modal.Actions>
+                <button className='green' inverted onClick={this.handleCreate}>
+                  <i className='checkmark'>Create</i>
+                </button>
+                <button className='red' onClick={this.handleCreateClose} inverted>
+                  <i className='remove'>Cancel</i>
+                </button>
+              </Modal.Actions>
+            </Modal>
           </div>
-        </nav>
-        <div className="container">
-          <div className="section section-title">
-            <h5 className="white-text shadow">TODOS</h5>
-          </div>
-          <p className="tasks" style={pStyles}>Completed Tasks: {this.state.todos.filter(todo => {return todo.done === true}).length}</p>
-          <p className="tasks" style={pStyles}>Pending Tasks: {this.state.todos.filter(todo => {return todo.done === false}).length}</p>
-          <div className="row isotope" style={{position: 'relative'}}>
-            {this.state.todos.map(todo => {
-              return (
-                <div className="col s12 m12 l4" style={{top: '0px'}} key={todo.id}>
-                  <div className="card">
-                    <div className="card-image waves-effect waves-block waves-light">
-                      <a href={'/docs/' + todo.id}>
-                        <img width="320" height="240" src={"/src/images/image" + Math.ceil(Math.random() * 10) + ".jpg"} className=" wp-post-image" alt={todo.title} title={todo.title} /> </a>
-                    </div>
-                    <div className="card-content">
-                      <a href={'/docs/' + todo._id}><p className="teal-text card-heading">{todo.title}</p></a>
-                      <p className="genre-text">Project: {todo.project}</p>
-                      <p className="date-text">Created: {moment(todo.createdAt).fromNow()}</p>
-                      {/*<p>Status: {todo.done ? 'Complete' : 'Pending'}</p>*/}
-                      <form action="#">
-                        <p>
-                          <input type="checkbox" id={todo.id} defaultChecked={todo.done}/>
-                          <label htmlFor={todo.id}>{todo.done ? 'Mark Incomplete' : 'Mark Completed'}</label>
-                        </p>
-                      </form>
-                      <a href={'#' + todo.id} className="waves-effect waves-light btn tooltipped teal" style={buttonStyles} data-position="bottom" data-delay="50" data-tooltip="Edit"><i className="material-icons" >mode_edit</i></a>
-                      <div id={todo.id} className="modal">
-                        <div>
-                          <div className="row">
-                            <h2 className="center-align" style={h2Styles}>Edit Todo</h2>
-                          </div>
-                          <form className="col s10 offset-s1">
-                            <div className="row">
-                              <div className="col s8 offset-s2">
-                                <label htmlFor="title">Title</label>
-                                <input className="teal-text" id="title"
+        </div>
+        <div className="ui centered container three column grid">
+          {this.state.todos.map(todo => {
+            return (
+              <div className="column" key={todo.id}>
+                <div className="ui brown card">
+                  <img className="ui image" src={'../src/images/image' + Math.ceil(Math.random() * 10) + '.jpg'} />
+                  <div className="content">
+                    <div className="header">{todo.title}</div>
+                    <div className="meta">{todo.project}</div>
+                    <div className="meta">Created 10 days ago</div>
+                  </div>
+                  <div className="extra content">
+                    <div>
+                      <div className="ui toggle checkbox" style={{marginBottom: '10px'}}>
+                        <input type="checkbox" name="public" value="on" defaultChecked ={todo.done} onChange={this.handleToggle.bind(null, todo.id)}/>
+                        <label>Complete</label>
+                      </div>
+                      <div className="ui two buttons">
+                        <Modal
+                          trigger={<button className='ui basic green button' onClick={this.handleEditOpen.bind(null, todo.id)}>Edit</button>}
+                          open={this.state.editModalOpen && this.state.openModal === todo.id}
+                          onClose={this.handleEditClose}
+                        >
+                          <Modal.Header>Edit Todo</Modal.Header>
+                          <Modal.Content>
+                            <div className='ui form'>
+                              <div className='field'>
+                                <label>Title</label>
+                                <input type='text'
                                   name="title"
                                   defaultValue={todo.title}
                                   onChange={this.handleFieldEdit}
-                                  type="text"
                                 />
                               </div>
-                            </div>
-                            <div className="row">
-                              <div className="col s8 offset-s2">
-                                <label htmlFor="project">Project</label>
-                                <input className="teal-text" id="project"
+                              <div className='field'>
+                                <label>Project</label>
+                                <input type='text'
                                   name="project"
-                                  defaultValue={todo.project}
+                                  defaultValue={todo.title}
                                   onChange={this.handleFieldEdit}
-                                  type="text"
                                 />
                               </div>
                             </div>
-                          </form>
-                        </div>
-                        <div className="modal-footer">
-                          <a href="#!" className="modal-action modal-close waves-effect waves-red btn-flat">Cancel</a>
-                          <a href="#!" className="modal-action modal-close waves-effect waves-green btn-flat" onClick={this.handleEdit.bind(null, todo.id)}>Edit</a>
-                        </div>
+                          </Modal.Content>
+                          <Modal.Actions>
+                            <button className='green' inverted onClick={this.handleEdit.bind(null, todo.id)}>
+                              <i className='checkmark'>Update</i>
+                            </button>
+                            <button className='red' onClick={this.handleEditClose} inverted>
+                              <i className='remove'>Cancel</i>
+                            </button>
+                          </Modal.Actions>
+                        </Modal>
+                        <button className="ui red basic button" onClick={this.handleDelete.bind(null, todo.id)}>Delete</button>
                       </div>
-                      <a className="waves-effect waves-light btn right tooltipped red" style={buttonStyles} data-position="bottom" data-delay="50" data-tooltip="Delete"><i className="material-icons">delete</i></a>
                     </div>
                   </div>
                 </div>
-              )
-            })}
-          </div>
+              </div>
+            )
+          })}
         </div>
       </div>
     )
   }
 }
 
-class Todo extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      isEditing: false
-    }
-    this.completeTodo = this.completeTodo.bind(this);
-    this.deleteTodo = this.deleteTodo.bind(this);
-    this.toggleForm = this.toggleForm.bind(this);
-  }
-
-  completeTodo() {
-
-  }
-
-  deleteTodo() {
-
-  }
-
-  toggleForm() {
-
-  }
-
-  render() {
-    return (
-      <div className='ui centered card'>
-        {this.state.isEditing
-          ?
-          <div className="content">
-            <div className='ui form'>
-              <div className='field'>
-                <label>Title</label>
-                <input type='text'/>
-              </div>
-              <div className='field'>
-                <label>Project</label>
-                <input type='text'/>
-              </div>
-              <div className='ui two button attached buttons'>
-                <button className='ui basic blue button' onClick={this.toggleForm}>
-                  Close X
-                </button>
-              </div>
-            </div>
-          </div>
-          :
-          <div className="content">
-            <div className='header'>
-                {this.props.todo.title }
-            </div>
-            <div className='meta'>
-                { this.props.todo.project }
-            </div>
-            <div className='extra content'>
-                <span className='right floated edit icon' onClick={this.toggleForm}>
-                <i className='edit icon'></i>
-              </span>
-              <span className='right floated trash icon' onClick={this.deleteTodo}>
-                <i className='trash icon'></i>
-              </span>
-            </div>
-          </div>
-        }
-        {(!this.state.isEditing && this.props.todo.done) &&
-          <div className='ui bottom attached green basic button' disabled>
-            Completed
-          </div>
-        }
-        {(!this.state.isEditing && !this.props.todo.done) &&
-          <div className='ui bottom attached red basic button' onClick={this.completeTodo}>
-              Pending
-          </div>
-        }
-      </div>
-    )
-  }
-}
 
 ReactDOM.render(<TodoList />, document.getElementById('content'));
-
-// export default TodoList
