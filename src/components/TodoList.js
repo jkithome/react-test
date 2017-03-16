@@ -181,11 +181,11 @@ class TodoList extends Component {
                 </div>
               </Modal.Content>
               <Modal.Actions>
-                <button className='green' inverted onClick={this.handleCreate}>
-                  <i className='checkmark'>Create</i>
+                <button className='ui inverted green button' onClick={this.handleCreate}>
+                  <i className='checkmark'></i> Create
                 </button>
-                <button className='red' onClick={this.handleCreateClose} inverted>
-                  <i className='remove'>Cancel</i>
+                <button className='ui inverted red button' onClick={this.handleCreateClose}>
+                  <i className='remove'></i> Cancel
                 </button>
               </Modal.Actions>
             </Modal>
@@ -236,11 +236,11 @@ class TodoList extends Component {
                             </div>
                           </Modal.Content>
                           <Modal.Actions>
-                            <button className='green' inverted onClick={this.handleEdit.bind(null, todo.id)}>
-                              <i className='checkmark'>Update</i>
+                            <button className='ui inverted green button' onClick={this.handleEdit.bind(null, todo.id)}>
+                              <i className='checkmark'></i> Update
                             </button>
-                            <button className='red' onClick={this.handleEditClose} inverted>
-                              <i className='remove'>Cancel</i>
+                            <button className='ui inverted red button' onClick={this.handleEditClose}>
+                              <i className='remove'></i> Cancel
                             </button>
                           </Modal.Actions>
                         </Modal>
