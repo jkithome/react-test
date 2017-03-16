@@ -1,78 +1,122 @@
-import React, { Component } from 'react';
-
+import React, { Component, PropTypes } from 'react'
+import moment from 'moment'
+import { Modal, Header, Actions } from 'semantic-ui-react'
 
 class Todo extends Component {
   constructor() {
-    supee();
+    super();
     this.state = {
-      isEditing: false
+      modalOpen: false,
+      todo: {}
     }
-    this.completeTodo = this.completeTodo.bind(this);
-    this.deleteTodo = this.deleteTodo.bind(this);
-    this.toggleForm = this.toggleForm.bind(this);
+    this.handleOpen=this.handleOpen.bind(this);
+    this.handleClose=this.handleClose.bind(this);
+    this.handleFieldChange=this.handleFieldChange.bind(this);
+    this.handleEdit=this.handleEdit.bind(this);
+    this.handleDelete=this.handleDelete.bind(this);
+    this.handleToggle=this.handleToggle.bind(this);
   }
 
-  completeTodo() {
-
+  handleOpen(e) {
+    this.setState({modalOpen: true});
   }
 
-  deleteTodo() {
-
+  handleClose(e) {
+    this.setState({modalOpen: false});
+    this.setState({todo: {}});
   }
 
-  toggleForm() {
+  handleFieldChange(e) {
+    var field = e.target.name;
+    var value = e.target.value;
+    var todo = this.state.todo;
+    var todo = Object.assign({}, todo, {[field]: value});
+    this.setState({todo: todo});
+  }
 
+  handleEdit(e) {
+    this.props.handleEdit(this.props.id, this.state.todo);
+    this.handleClose();
+  }
+
+  handleDelete(e) {
+    this.props.handleDelete(this.props.id)
+  }
+
+  handleToggle(e) {
+    this.props.handleToggle(this.props.id)
   }
 
   render() {
-    <div class='ui centered card'>
-    {!this.state.isEditing
-      ?
-      <div class="content">
-        <div class='header'>
-            {this.props.todo.title }
-        </div>
-        <div class='meta'>
-            { this.props.todo.project }
-        </div>
-        <div class='extra content'>
-            <span class='right floated edit icon' onClick={this.toggleForm}>
-            <i class='edit icon'></i>
-          </span>
-          <span class='right floated trash icon' onClick={this.deleteTodo}>
-            <i class='trash icon'></i>
-          </span>
-        </div>
-      </div>
-      :
-      <div class="content">
-        <div class='ui form'>
-          <div class='field'>
-            <label>Title</label>
-            <input type='text'/>
+    return (
+      <div className="column">
+        <div className="ui brown card">
+          <img className="ui image" src={'../src/images/image' + Math.ceil(Math.random() * 10) + '.jpg'} />
+          <div className="content">
+            <div className="header">{this.props.title}</div>
+            <div className="meta">{this.props.project}</div>
+            <div className="meta">Created {moment(this.props.createdAt).fromNow()}</div>
           </div>
-          <div class='field'>
-            <label>Project</label>
-            <input type='text'/>
-          </div>
-          <div class='ui two button attached buttons'>
-            <button class='ui basic blue button' onClick={this.toggleForm}>
-              Close X
-            </button>
+          <div className="extra content">
+            <div>
+              <div className="ui toggle checkbox" style={{marginBottom: '10px'}}>
+                <input type="checkbox" name="public" value="on" defaultChecked ={this.props.done} onChange={this.handleToggle}/>
+                <label>Complete</label>
+              </div>
+              <div className="ui two buttons">
+                <Modal
+                  trigger={<button className='ui basic green button' onClick={this.handleOpen}>Edit</button>}
+                  open={this.state.modalOpen}
+                  onClose={this.handleClose}
+                >
+                  <Modal.Header>Edit Todo</Modal.Header>
+                  <Modal.Content>
+                    <div className='ui form'>
+                      <div className='field'>
+                        <label>Title</label>
+                        <input type='text'
+                          name="title"
+                          defaultValue={this.props.title}
+                          onChange={this.handleFieldChange}
+                        />
+                      </div>
+                      <div className='field'>
+                        <label>Project</label>
+                        <input type='text'
+                          name="project"
+                          defaultValue={this.props.project}
+                          onChange={this.handleFieldChange}
+                        />
+                      </div>
+                    </div>
+                  </Modal.Content>
+                  <Modal.Actions>
+                    <button className='ui inverted green button' onClick={this.handleEdit}>
+                      <i className='checkmark icon'></i> Update
+                    </button>
+                    <button className='ui inverted red button' onClick={this.handleClose}>
+                      <i className='remove icon'></i> Cancel
+                    </button>
+                  </Modal.Actions>
+                </Modal>
+                <button className="ui red basic button" onClick={this.handleDelete}>Delete</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    }
-    {(!this.state.isEditing && todo.done) &&
-      <div class='ui bottom attached green basic button' disabled>
-        Completed
-      </div>
-    }
-    {(!this.state.isEditing && !todo.done) &&
-      <div class='ui bottom attached red basic button' onClick={this.completeTodo}>
-          Pending
-      </div>
-    }
-  </div>
+    )
   }
 }
+
+Todo.propTypes = {
+  id: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  project: PropTypes.string.isRequired,
+  done: PropTypes.bool.isRequired,
+  createdAt: PropTypes.string.isRequired,
+  handleEdit: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func.isRequired,
+};
+
+export default Todo

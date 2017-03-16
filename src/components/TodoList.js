@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import moment from 'moment'
 import { Modal, Header, Actions } from 'semantic-ui-react'
 import ReactDOM from 'react-dom'
+import Todo from './Todo'
 
 class TodoList extends Component {
   constructor() {
@@ -45,19 +46,15 @@ class TodoList extends Component {
         title: '',
         project: ''
       },
-      editedTodo: {},
-      createModalOpen: false,
-      editModalOpen: false,
-      openModal: null,
+      modalOpen: false,
     }
-    this.handleItemClick = this.handleItemClick.bind(this);
-    this.handleCreateOpen = this.handleCreateOpen.bind(this);
-    this.handleCreateClose = this.handleCreateClose.bind(this);
-    this.handleEditOpen = this.handleEditOpen.bind(this);
-    this.handleEditClose = this.handleEditClose.bind(this);
+    this.handleOpen = this.handleOpen.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    {/*this.handleEditOpen = this.handleEditOpen.bind(this);
+        this.handleEditClose = this.handleEditClose.bind(this);*/}
     this.handleFieldChange = this.handleFieldChange.bind(this);
     this.handleCreate = this.handleCreate.bind(this);
-    this.handleFieldEdit = this.handleFieldEdit.bind(this);
+    {/*this.handleFieldEdit = this.handleFieldEdit.bind(this);*/}
     this.handleEdit = this.handleEdit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
@@ -67,24 +64,24 @@ class TodoList extends Component {
     this.setState({ activeItem: name });
   }
 
-  handleCreateOpen() {
-    this.setState({createModalOpen: true});
+  handleOpen() {
+    this.setState({modalOpen: true});
   }
 
-  handleCreateClose() {
-    this.setState({createModalOpen: false});
+  handleClose() {
+    this.setState({modalOpen: false});
   }
 
-  handleEditOpen(id) {
-    this.setState({editModalOpen: true});
-    this.setState({openModal: id})
-  }
+  // handleEditOpen(id) {
+  //   this.setState({editModalOpen: true});
+  //   this.setState({openModal: id})
+  // }
 
-  handleEditClose() {
-    this.setState({editModalOpen: false});
-    this.setState({openModal: null});
-    this.setState({editedTodo: {}});
-  }
+  // handleEditClose() {
+  //   this.setState({editModalOpen: false});
+  //   this.setState({openModal: null});
+  //   this.setState({editedTodo: {}});
+  // }}
 
   handleFieldChange(e) {
     var field = e.target.name;
@@ -100,30 +97,27 @@ class TodoList extends Component {
     var todos = this.state.todos;
     todos.push(todo);
     this.setState({todos: todos})
-    this.handleCreateClose();
+    this.handleClose();
   }
 
-  handleFieldEdit(e) {
-    var field = e.target.name;
-    var value = e.target.value;
-    var _todo = this.state.editedTodo;
-    var todo = Object.assign({}, _todo, {[field]: value});
-    this.setState({editedTodo: todo});
-  }
+  // handleFieldEdit(e) {
+  //   var field = e.target.name;
+  //   var value = e.target.value;
+  //   var _todo = this.state.editedTodo;
+  //   var todo = Object.assign({}, _todo, {[field]: value});
+  //   this.setState({editedTodo: todo});
+  // }
 
-  handleEdit(id) {
-    var editedTodo = this.state.editedTodo
+  handleEdit(id, _todo) {
     var todos = this.state.todos;
     var newTodos = todos.map(todo => {
       if (todo.id === id) {
-        return Object.assign({}, todo, editedTodo)
+        return Object.assign({}, todo, _todo)
       } else {
         return todo;
       }
     });
-    this.setState({editedTodo: {}});
     this.setState({todos: newTodos});
-    this.handleEditClose();
   }
 
   handleDelete(id) {
@@ -161,12 +155,12 @@ class TodoList extends Component {
           <div className="column" style={{textAlign: 'center'}}>
             <Modal
               trigger={
-                <div className="ui icon button" data-tooltip="Create New Todo" data-position="bottom center" onClick={this.handleCreateOpen}>
+                <div className="ui icon button" data-tooltip="Create New Todo" data-position="bottom center" onClick={this.handleOpen}>
                   <i className="add icon"></i>
                 </div>
               }
-              open={this.state.createModalOpen}
-              onClose={this.handleCreateClose}
+              open={this.state.modalOpen}
+              onClose={this.handleClose}
             >
               <Modal.Header>Create Todo</Modal.Header>
               <Modal.Content>
@@ -185,7 +179,7 @@ class TodoList extends Component {
                 <button className='ui inverted green button' onClick={this.handleCreate}>
                   <i className='checkmark icon'></i> Create
                 </button>
-                <button className='ui inverted red button' onClick={this.handleCreateClose}>
+                <button className='ui inverted red button' onClick={this.handleClose}>
                   <i className='remove icon'></i> Cancel
                 </button>
               </Modal.Actions>
@@ -195,62 +189,16 @@ class TodoList extends Component {
         <div className="ui centered container three column grid">
           {this.state.todos.map(todo => {
             return (
-              <div className="column" key={todo.id}>
-                <div className="ui brown card">
-                  <img className="ui image" src={'../src/images/image' + Math.ceil(Math.random() * 10) + '.jpg'} />
-                  <div className="content">
-                    <div className="header">{todo.title}</div>
-                    <div className="meta">{todo.project}</div>
-                    <div className="meta">Created {moment(todo.createdAt).fromNow()}</div>
-                  </div>
-                  <div className="extra content">
-                    <div>
-                      <div className="ui toggle checkbox" style={{marginBottom: '10px'}}>
-                        <input type="checkbox" name="public" value="on" defaultChecked ={todo.done} onChange={this.handleToggle.bind(null, todo.id)}/>
-                        <label>Complete</label>
-                      </div>
-                      <div className="ui two buttons">
-                        <Modal
-                          trigger={<button className='ui basic green button' onClick={this.handleEditOpen.bind(null, todo.id)}>Edit</button>}
-                          open={this.state.editModalOpen && this.state.openModal === todo.id}
-                          onClose={this.handleEditClose}
-                        >
-                          <Modal.Header>Edit Todo</Modal.Header>
-                          <Modal.Content>
-                            <div className='ui form'>
-                              <div className='field'>
-                                <label>Title</label>
-                                <input type='text'
-                                  name="title"
-                                  defaultValue={todo.title}
-                                  onChange={this.handleFieldEdit}
-                                />
-                              </div>
-                              <div className='field'>
-                                <label>Project</label>
-                                <input type='text'
-                                  name="project"
-                                  defaultValue={todo.title}
-                                  onChange={this.handleFieldEdit}
-                                />
-                              </div>
-                            </div>
-                          </Modal.Content>
-                          <Modal.Actions>
-                            <button className='ui inverted green button' onClick={this.handleEdit.bind(null, todo.id)}>
-                              <i className='checkmark icon'></i> Update
-                            </button>
-                            <button className='ui inverted red button' onClick={this.handleEditClose}>
-                              <i className='remove icon'></i> Cancel
-                            </button>
-                          </Modal.Actions>
-                        </Modal>
-                        <button className="ui red basic button" onClick={this.handleDelete.bind(null, todo.id)}>Delete</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <Todo key={todo.id}
+                id={todo.id}
+                title={todo.title}
+                project={todo.project}
+                done={todo.done}
+                createdAt={todo.createdAt}
+                handleEdit={this.handleEdit}
+                handleDelete={this.handleDelete}
+                handleToggle={this.handleToggle}
+              />
             )
           })}
         </div>
