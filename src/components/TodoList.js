@@ -89,11 +89,23 @@ class TodoList extends Component {
   }
 
   handleDelete(id) {
-    var todos = this.state.todos;
-    var newTodos = todos.filter(todo => {
-      return todo.id !== id;
+    fetch('/api/todo/' + id, {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'DELETE',
+    }).then(response => {
+      if (!response.ok) {
+        return response.json().then(Promise.reject.bind(Promise));
+      }
+      return response.json();
+    }).then(json => {
+      console.log(json);
+    }).catch(err => {
+      console.log('There was an error', err);
     });
-    this.setState({todos: newTodos});
+
+    this.fetchTodos();
   }
 
   handleToggle(id,done) {
