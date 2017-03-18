@@ -38,8 +38,25 @@ class CreateTodo extends Component {
   }
 
   handleCreate() {
-    this.props.handleCreate(this.state.todo);
+    fetch('/api/todos', {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify(this.state.todo)
+    }).then(response => {
+      if (!response.ok) {
+        return response.json().then(Promise.reject.bind(Promise));
+      }
+      return response.json();
+    }).then(json => {
+      console.log(json);
+    }).catch(err => {
+      console.log('There was an error', err);
+    });
+
     this.setState({todo: {title: null, project: null}});
+    this.props.fetchTodos();
     this.handleClose();
   }
 
@@ -83,7 +100,7 @@ class CreateTodo extends Component {
 }
 
 CreateTodo.propTypes = {
-  handleCreate: PropTypes.func.isRequired,
+  fetchTodos: PropTypes.func.isRequired,
 };
 
 export default CreateTodo

@@ -13,10 +13,6 @@ class TodoList extends Component {
       todos: [],
       isFetching: false
     }
-    this.handleCreate = this.handleCreate.bind(this);
-    this.handleEdit = this.handleEdit.bind(this);
-    this.handleDelete = this.handleDelete.bind(this);
-    this.handleToggle = this.handleToggle.bind(this);
     this.fetchTodos = this.fetchTodos.bind(this);
   }
 
@@ -45,90 +41,6 @@ class TodoList extends Component {
     });
   }
 
-
-  handleCreate(todo) {
-    fetch('/api/todos', {
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      method: 'POST',
-      body: JSON.stringify(todo)
-    }).then(response => {
-      if (!response.ok) {
-        return response.json().then(Promise.reject.bind(Promise));
-      }
-      return response.json();
-    }).then(json => {
-      console.log(json);
-    }).catch(err => {
-      console.log('There was an error', err);
-    });
-
-    this.fetchTodos();
-  }
-
-  handleEdit(id, _todo) {
-    fetch('/api/todo/' + id, {
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      method: 'PUT',
-      body: JSON.stringify(_todo)
-    }).then(response => {
-      if (!response.ok) {
-        return response.json().then(Promise.reject.bind(Promise));
-      }
-      return response.json();
-    }).then(json => {
-      console.log(json);
-    }).catch(err => {
-      console.log('There was an error', err);
-    });
-
-    this.fetchTodos();
-  }
-
-  handleDelete(id) {
-    fetch('/api/todo/' + id, {
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      method: 'DELETE',
-    }).then(response => {
-      if (!response.ok) {
-        return response.json().then(Promise.reject.bind(Promise));
-      }
-      return response.json();
-    }).then(json => {
-      console.log(json);
-    }).catch(err => {
-      console.log('There was an error', err);
-    });
-
-    this.fetchTodos();
-  }
-
-  handleToggle(id,done) {
-    fetch('/api/todo/' + id, {
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      method: 'PUT',
-      body: JSON.stringify({done: done})
-    }).then(response => {
-      if (!response.ok) {
-        return response.json().then(Promise.reject.bind(Promise));
-      }
-      return response.json();
-    }).then(json => {
-      console.log(json);
-    }).catch(err => {
-      console.log('There was an error', err);
-    });
-
-    this.fetchTodos();
-  }
-
   render() {
     const { activeItem } = this.state
 
@@ -142,7 +54,7 @@ class TodoList extends Component {
         </div>
         <div className="ui centered container one column grid">
           <CreateTodo
-            handleCreate={this.handleCreate}
+            fetchTodos={this.fetchTodos}
           />
         </div>
         <div className="ui centered container three column grid">
@@ -161,8 +73,7 @@ class TodoList extends Component {
                     project={todo.project}
                     done={todo.done}
                     createdAt={todo.createdAt}
-                    handleEdit={this.handleEdit}
-                    handleDelete={this.handleDelete}
+                    fetchTodos={this.fetchTodos}
                     handleToggle={this.handleToggle}
                   />
                 )

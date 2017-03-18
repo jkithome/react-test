@@ -36,16 +36,67 @@ class Todo extends Component {
   }
 
   handleEdit(e) {
-    this.props.handleEdit(this.props.id, this.state.todo);
+    //this.props.handleEdit(this.props.id, this.state.todo);
+    fetch('/api/todo/' + this.props.id, {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'PUT',
+      body: JSON.stringify(this.state.todo)
+    }).then(response => {
+      if (!response.ok) {
+        return response.json().then(Promise.reject.bind(Promise));
+      }
+      return response.json();
+    }).then(json => {
+      console.log(json);
+    }).catch(err => {
+      console.log('There was an error', err);
+    });
+
+    this.props.fetchTodos();
     this.handleClose();
   }
 
   handleDelete(e) {
-    this.props.handleDelete(this.props.id)
+    fetch('/api/todo/' + this.props.id, {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'DELETE',
+    }).then(response => {
+      if (!response.ok) {
+        return response.json().then(Promise.reject.bind(Promise));
+      }
+      return response.json();
+    }).then(json => {
+      console.log(json);
+    }).catch(err => {
+      console.log('There was an error', err);
+    });
+
+    this.props.fetchTodos();
   }
 
   handleToggle(e) {
-    this.props.handleToggle(this.props.id, !this.props.done)
+    fetch('/api/todo/' + this.props.id, {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'PUT',
+      body: JSON.stringify({done: !this.props.done})
+    }).then(response => {
+      if (!response.ok) {
+        return response.json().then(Promise.reject.bind(Promise));
+      }
+      return response.json();
+    }).then(json => {
+      console.log(json);
+    }).catch(err => {
+      console.log('There was an error', err);
+    });
+
+    this.props.fetchTodos();
   }
 
   render() {
@@ -116,8 +167,7 @@ Todo.propTypes = {
   project: PropTypes.string.isRequired,
   done: PropTypes.bool.isRequired,
   createdAt: PropTypes.string.isRequired,
-  handleEdit: PropTypes.func.isRequired,
-  handleDelete: PropTypes.func.isRequired,
+  fetchTodos: PropTypes.func.isRequired,
 };
 
 export default Todo
