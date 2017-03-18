@@ -5,39 +5,6 @@ import ReactDOM from 'react-dom'
 import Todo from './Todo'
 import CreateTodo from './CreateTodo'
 import url from '../images/React-icon.svg'
-// const todos =
-// [{
-//   "id": "b7bb6cfa-6e1b-4895-8198-4d5e080e5c0e",
-//   "title": "TodoX",
-//   "project": "ProjectX",
-//   "done": true,
-//   "createdAt": "2017-03-02T12:26:54.584Z",
-//   "modifiedAt": "2017-03-02T12:50:16.717Z"
-// },
-// {
-//   "id": "7ae5bfa3-f0d4-4fd3-8a9b-61676d67a3c8",
-//   "title": "Todo1",
-//   "project": "Project",
-//   "done": false,
-//   "createdAt": "2017-03-02T23:04:38.003Z",
-//   "modifiedAt": "2017-03-02T23:05:30.133Z"
-// },
-// {
-//   "id": "7ae5bfa3-f0d4-4fd3-8a9b-61676d67a3c7",
-//   "title": "Todo5",
-//   "project": "Project5",
-//   "done": true,
-//   "createdAt": "2017-03-02T23:04:38.003Z",
-//   "modifiedAt": "2017-03-02T23:05:30.133Z"
-// },
-// {
-//   "id": "7ae5bfa3-f0d4-4fd3-8a9b-61676d67a3c6",
-//   "title": "Todo6",
-//   "project": "Project6",
-//   "done": true,
-//   "createdAt": "2017-03-02T23:04:38.003Z",
-//   "modifiedAt": "2017-03-02T23:05:30.133Z"
-// }]
 
 class TodoList extends Component {
   constructor() {
@@ -54,7 +21,7 @@ class TodoList extends Component {
   }
 
   componentWillMount() {
-    this.fetchTodos()
+    this.fetchTodos();
   }
 
   fetchTodos() {
@@ -80,10 +47,24 @@ class TodoList extends Component {
 
 
   handleCreate(todo) {
-    var newTodo = Object.assign({}, todo, {done: false, createdAt: new Date(), modifiedAt: new Date(), id: (Math.floor(Math.random() * 10000000)).toString()});
-    var todos = this.state.todos;
-    todos.push(newTodo);
-    this.setState({todos: todos})
+    fetch('/api/todos', {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify(todo)
+    }).then(response => {
+      if (!response.ok) {
+        return response.json().then(Promise.reject.bind(Promise));
+      }
+      return response.json();
+    }).then(json => {
+      console.log(json);
+    }).catch(err => {
+      console.log('There was an error', err);
+    });
+
+    this.fetchTodos();
   }
 
   handleEdit(id, _todo) {
