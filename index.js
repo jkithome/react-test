@@ -22,7 +22,8 @@ app.get('/api', (req, res) => {
 // get all Todos
 app.get('/api/todos', (req, res) => {
   const data = db.getData("/todos");
-  res.json(data)
+  const result = _.map(data, (value, key) => { return value;});
+  res.json(result);
 });
 
 // create a Todo
