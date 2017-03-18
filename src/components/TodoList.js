@@ -4,6 +4,7 @@ import { Modal, Header, Actions } from 'semantic-ui-react'
 import ReactDOM from 'react-dom'
 import Todo from './Todo'
 import CreateTodo from './CreateTodo'
+import url from '../images/React-icon.svg'
 
 class TodoList extends Component {
   constructor() {
@@ -97,7 +98,7 @@ class TodoList extends Component {
       <div>
         <div className="ui inverted segment" style={{borderRadius: '0px'}}>
           <h1 className="ui grey inverted center aligned header">
-            <img className="ui large centered image" src="../src/images/React-icon.svg" />
+            <img className="ui large centered image" src={url} />
             <div className="content">React Testing</div>
           </h1>
         </div>

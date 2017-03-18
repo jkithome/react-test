@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import moment from 'moment'
 import { Modal, Header, Actions } from 'semantic-ui-react'
+var pathToImages = require.context('../images', true);
 
 class Todo extends Component {
   constructor() {
@@ -51,7 +52,7 @@ class Todo extends Component {
     return (
       <div className="column">
         <div className="ui brown card">
-          <img className="ui image" src={'../src/images/image' + Math.ceil(Math.random() * 10) + '.jpg'} />
+          <img className="ui image" src={pathToImages(`./image${Math.ceil(Math.random() * 10)}.jpg`, true)} />
           <div className="content">
             <div className="header">{this.props.title}</div>
             <div className="meta">{this.props.project}</div>

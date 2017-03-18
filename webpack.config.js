@@ -4,7 +4,8 @@ module.exports = {
   entry: "./src/components/TodoList.js",
   output: {
     filename: "bundle.js",
-    path: path.resolve(__dirname, "dist")
+    path: path.resolve(__dirname, "dist"),
+
   },
   module: {
     rules: [
@@ -14,6 +15,12 @@ module.exports = {
         loader: "babel-loader",
         options: { presets: ["es2015","react"] }
       }]
+    },
+    {
+      test: /\.(jpe?g|png|gif|svg)$/i,
+      loaders: [
+        "file-loader?name=[name].[ext]&publicPath=images/&outputPath=images/"
+      ]
     }
   ]
   },
