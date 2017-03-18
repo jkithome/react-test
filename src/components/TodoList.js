@@ -68,15 +68,24 @@ class TodoList extends Component {
   }
 
   handleEdit(id, _todo) {
-    var todos = this.state.todos;
-    var newTodos = todos.map(todo => {
-      if (todo.id === id) {
-        return Object.assign({}, todo, _todo)
-      } else {
-        return todo;
+    fetch('/api/todo/' + id, {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'PUT',
+      body: JSON.stringify(_todo)
+    }).then(response => {
+      if (!response.ok) {
+        return response.json().then(Promise.reject.bind(Promise));
       }
+      return response.json();
+    }).then(json => {
+      console.log(json);
+    }).catch(err => {
+      console.log('There was an error', err);
     });
-    this.setState({todos: newTodos});
+
+    this.fetchTodos();
   }
 
   handleDelete(id) {
