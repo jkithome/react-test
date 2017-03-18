@@ -45,7 +45,7 @@ class Todo extends Component {
   }
 
   handleToggle(e) {
-    this.props.handleToggle(this.props.id)
+    this.props.handleToggle(this.props.id, !this.props.done)
   }
 
   render() {

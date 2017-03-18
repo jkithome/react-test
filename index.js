@@ -62,13 +62,14 @@ app.put('/api/todo/:id', (req, res) => {
   const path = "/todos/" + id;
 
   const { title, project, done } = req.body;
+
   try {
     const todo = db.getData(path);
     const modifiedAt = new Date();
     const updatedTodo = Object.assign({}, todo, {
       title: title || todo.title,
       project: project || todo.project,
-      done: done || todo.done,
+      done: typeof done === 'boolean' ? done : todo.done,
       modifiedAt
     });
     db.push(path, updatedTodo, true);
