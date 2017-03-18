@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import JsonDB from 'node-json-db';
 import uuid from 'uuid';
 import _ from 'lodash';
+import path from 'path';
 const app = express();
 const db = new JsonDB("db", true, false);
 
@@ -86,6 +87,15 @@ app.delete('/api/todo/:id', (req, res) => {
   } catch (error) {
     res.status(500).json({ message: 'Error deleting Todo' });
   }
+});
+
+// Point static path to dist
+app.use(express.static(path.join(__dirname, 'dist')));
+
+
+// Catch all other routes and return the index file
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
 app.listen(8000);
