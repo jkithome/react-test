@@ -1,7 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import moment from 'moment'
 import { Modal, Header, Actions } from 'semantic-ui-react'
-import ReactDOM from 'react-dom'
+import {connect} from 'react-redux';
+import {fetchTodos} from '../redux/modules/todo/actions'
 import Todo from './Todo'
 import CreateTodo from './CreateTodo'
 import url from '../images/React-icon.svg'
@@ -10,40 +11,21 @@ class TodoList extends Component {
   constructor() {
     super();
     this.state = {
-      todos: [],
-      isFetching: false
+      // todos: [],
+      // isFetching: false
     }
-    this.fetchTodos = this.fetchTodos.bind(this);
+    // this.fetchTodos = this.fetchTodos.bind(this);
   }
 
   componentWillMount() {
-    this.fetchTodos();
+    this.props.fetchTodos();
   }
 
-  fetchTodos() {
-    this.setState({isFetching: true});
-    fetch('/api/todos', {
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      method: 'GET',
-    }).then(response => {
-      if (!response.ok) {
-        return response.json().then(Promise.reject.bind(Promise));
-      }
-      return response.json();
-    }).then(json => {
-      this.setState({todos: json})
-      this.setState({isFetching: false});
-    }).catch(err => {
-      console.log('There was an error', err);
-      this.setState({isFetching: false});
-    });
-  }
+  // fetchTodos() {
+  //   this.props.fetchTodos();
+  // }
 
   render() {
-    const { activeItem } = this.state
-
     return (
       <div>
         <div className="ui inverted segment" style={{borderRadius: '0px'}}>
@@ -52,20 +34,19 @@ class TodoList extends Component {
             <div className="content">React Testing</div>
           </h1>
         </div>
+        {this.props.todo.requesting &&
+          <div className="ui centered container one column grid" style={{marginTop: '30px', marginBottom: '20px'}}>
+            <div className="column">
+              <div className="ui active loader big"></div>
+            </div>
+          </div>
+        }
         <div className="ui centered container one column grid">
-          <CreateTodo
-            fetchTodos={this.fetchTodos}
-          />
+          <CreateTodo />
         </div>
         <div className="ui centered container three column grid">
-          {this.state.isFetching ?
-            <div className="ui segment">
-              <div className="ui active dimmer">
-                <div className="ui massive text loader">Fetching Todos</div>
-              </div>
-            </div>
-            : (this.state.todos.length ?
-              this.state.todos.map(todo => {
+          {this.props.todo.todos.length ?
+              this.props.todo.todos.map(todo => {
                 return (
                   <Todo key={todo.id}
                     id={todo.id}
@@ -73,13 +54,11 @@ class TodoList extends Component {
                     project={todo.project}
                     done={todo.done}
                     createdAt={todo.createdAt}
-                    fetchTodos={this.fetchTodos}
-                    handleToggle={this.handleToggle}
                   />
                 )
               })
               :
-              <div className="Column" style={{fontSize: 'xx-large'}}>No Todos</div>)
+              <div className="Column" style={{fontSize: 'xx-large'}}>No Todos</div>
           }
         </div>
       </div>
@@ -88,4 +67,14 @@ class TodoList extends Component {
 }
 
 
-ReactDOM.render(<TodoList />, document.getElementById('content'));
+TodoList.propTypes = {
+  todo: PropTypes.object.isRequired,
+  fetchTodos: PropTypes.func.isRequired
+};
+
+export default connect(
+  state => ({
+    todo: state.todo
+  }),
+  {fetchTodos}
+)(TodoList);

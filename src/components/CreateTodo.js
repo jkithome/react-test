@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import moment from 'moment'
 import { Modal, Header, Actions } from 'semantic-ui-react'
+import {connect} from 'react-redux'
+import {createTodo} from '../redux/modules/todo/actions'
 
 
 class CreateTodo extends Component {
@@ -38,25 +40,7 @@ class CreateTodo extends Component {
   }
 
   handleCreate() {
-    fetch('/api/todos', {
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      method: 'POST',
-      body: JSON.stringify(this.state.todo)
-    }).then(response => {
-      if (!response.ok) {
-        return response.json().then(Promise.reject.bind(Promise));
-      }
-      return response.json();
-    }).then(json => {
-      console.log(json);
-    }).catch(err => {
-      console.log('There was an error', err);
-    });
-
-    this.setState({todo: {title: null, project: null}});
-    this.props.fetchTodos();
+    this.props.createTodo(this.state.todo);
     this.handleClose();
   }
 
@@ -100,7 +84,7 @@ class CreateTodo extends Component {
 }
 
 CreateTodo.propTypes = {
-  fetchTodos: PropTypes.func.isRequired,
+  createTodo: PropTypes.func.isRequired,
 };
 
-export default CreateTodo
+export default connect(null, {createTodo})(CreateTodo);

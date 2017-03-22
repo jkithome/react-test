@@ -37,7 +37,7 @@ app.post('/api/todos', (req, res) => {
   try {
     const path = "/todos/" + id;
     db.push(path, { id, title, project, done, createdAt, modifiedAt }, true);
-    res.json({ message: 'Todo created successfully' })
+    res.json({ id, title, project, done, createdAt, modifiedAt })
   } catch (error) {
     console.log(error);
     res.json({ message: 'Error creating Todo' })
@@ -73,7 +73,7 @@ app.put('/api/todo/:id', (req, res) => {
       modifiedAt
     });
     db.push(path, updatedTodo, true);
-    res.json({ message: 'Todo successfully updated' });
+    res.json(updatedTodo);
   } catch (error) {
     res.status(500).json({ message: 'Error updating Todo' });
   }

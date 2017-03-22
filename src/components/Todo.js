@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import moment from 'moment'
 import { Modal, Header, Actions } from 'semantic-ui-react'
+import {connect} from 'react-redux'
+import {editTodo, toggleTodo, deleteTodo} from '../redux/modules/todo/actions'
 var pathToImages = require.context('../images', true);
 
 class Todo extends Component {
@@ -36,67 +38,16 @@ class Todo extends Component {
   }
 
   handleEdit(e) {
-    //this.props.handleEdit(this.props.id, this.state.todo);
-    fetch('/api/todo/' + this.props.id, {
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      method: 'PUT',
-      body: JSON.stringify(this.state.todo)
-    }).then(response => {
-      if (!response.ok) {
-        return response.json().then(Promise.reject.bind(Promise));
-      }
-      return response.json();
-    }).then(json => {
-      console.log(json);
-    }).catch(err => {
-      console.log('There was an error', err);
-    });
-
-    this.props.fetchTodos();
+    this.props.editTodo(this.props.id, this.state.todo);
     this.handleClose();
   }
 
   handleDelete(e) {
-    fetch('/api/todo/' + this.props.id, {
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      method: 'DELETE',
-    }).then(response => {
-      if (!response.ok) {
-        return response.json().then(Promise.reject.bind(Promise));
-      }
-      return response.json();
-    }).then(json => {
-      console.log(json);
-    }).catch(err => {
-      console.log('There was an error', err);
-    });
-
-    this.props.fetchTodos();
+    this.props.deleteTodo(this.props.id);
   }
 
   handleToggle(e) {
-    fetch('/api/todo/' + this.props.id, {
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      method: 'PUT',
-      body: JSON.stringify({done: !this.props.done})
-    }).then(response => {
-      if (!response.ok) {
-        return response.json().then(Promise.reject.bind(Promise));
-      }
-      return response.json();
-    }).then(json => {
-      console.log(json);
-    }).catch(err => {
-      console.log('There was an error', err);
-    });
-
-    this.props.fetchTodos();
+    this.props.toggleTodo(this.props.id, {done: !this.props.done})
   }
 
   render() {
@@ -167,7 +118,9 @@ Todo.propTypes = {
   project: PropTypes.string.isRequired,
   done: PropTypes.bool.isRequired,
   createdAt: PropTypes.string.isRequired,
-  fetchTodos: PropTypes.func.isRequired,
+  editTodo: PropTypes.func.isRequired,
+  toggleTodo: PropTypes.func.isRequired,
+  deleteTodo: PropTypes.func.isRequired
 };
 
-export default Todo
+export default connect(null, {editTodo, toggleTodo, deleteTodo})(Todo);
