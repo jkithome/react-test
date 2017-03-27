@@ -3,9 +3,9 @@ import moment from 'moment'
 import { Modal, Header, Actions } from 'semantic-ui-react'
 import {connect} from 'react-redux'
 import {editTodo, toggleTodo, deleteTodo} from '../redux/modules/todo/actions'
-var pathToImages = require.context('../images', true);
+// var pathToImages = require.context('../images', true);
 
-class Todo extends Component {
+export class Todo extends Component {
   constructor() {
     super();
     this.state = {
@@ -54,7 +54,7 @@ class Todo extends Component {
     return (
       <div className="column">
         <div className="ui brown card">
-          <img className="ui image" src={pathToImages(`./image${Math.ceil(Math.random() * 10)}.jpg`, true)} />
+          <img className="ui image" src={this.props.url} />
           <div className="content">
             <div className="header">{this.props.title}</div>
             <div className="meta">{this.props.project}</div>
@@ -117,6 +117,7 @@ Todo.propTypes = {
   title: PropTypes.string.isRequired,
   project: PropTypes.string.isRequired,
   done: PropTypes.bool.isRequired,
+  url: PropTypes.string.isRequired,
   createdAt: PropTypes.string.isRequired,
   editTodo: PropTypes.func.isRequired,
   toggleTodo: PropTypes.func.isRequired,

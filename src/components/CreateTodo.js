@@ -5,7 +5,7 @@ import {connect} from 'react-redux'
 import {createTodo} from '../redux/modules/todo/actions'
 
 
-class CreateTodo extends Component {
+export class CreateTodo extends Component {
   constructor() {
     super();
     this.state = {

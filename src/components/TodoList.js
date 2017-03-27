@@ -7,23 +7,16 @@ import Todo from './Todo'
 import CreateTodo from './CreateTodo'
 import url from '../images/React-icon.svg'
 
-class TodoList extends Component {
+export class TodoList extends Component {
   constructor() {
     super();
     this.state = {
-      // todos: [],
-      // isFetching: false
     }
-    // this.fetchTodos = this.fetchTodos.bind(this);
   }
 
   componentWillMount() {
     this.props.fetchTodos();
   }
-
-  // fetchTodos() {
-  //   this.props.fetchTodos();
-  // }
 
   render() {
     return (
@@ -53,6 +46,7 @@ class TodoList extends Component {
                     title={todo.title}
                     project={todo.project}
                     done={todo.done}
+                    url={todo.image}
                     createdAt={todo.createdAt}
                   />
                 )
