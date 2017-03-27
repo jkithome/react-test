@@ -32,12 +32,13 @@ app.post('/api/todos', (req, res) => {
   const title = req.body.title;
   const project = req.body.project;
   const done = false;
+  const image = `https://raw.githubusercontent.com/andela-jkithome/image_files/master/images/image${Math.ceil(Math.random() * 10)}.jpg`
   const createdAt = new Date();
   const modifiedAt = new Date();
   try {
     const path = "/todos/" + id;
-    db.push(path, { id, title, project, done, createdAt, modifiedAt }, true);
-    res.json({ id, title, project, done, createdAt, modifiedAt })
+    db.push(path, { id, title, project, done, image, createdAt, modifiedAt }, true);
+    res.json({ id, title, project, done, image, createdAt, modifiedAt })
   } catch (error) {
     console.log(error);
     res.json({ message: 'Error creating Todo' })
