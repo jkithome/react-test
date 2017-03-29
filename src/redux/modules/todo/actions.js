@@ -1,83 +1,83 @@
 import fetch from 'isomorphic-fetch';
 
-const fetchRequest = () => ({
+export const fetchRequest = () => ({
   type: 'TODO_REQUEST'
 });
 
-const fetchSuccess = (todos) => ({
+export const fetchSuccess = (todos) => ({
   type: 'TODO_SUCCESS',
   todos
 });
 
-const fetchFailure = (failure) => ({
+export const fetchFailure = (failure) => ({
   type: 'TODO_FAILURE',
   failure
 });
 
-const createRequest = () => ({
+export const createRequest = () => ({
   type: 'CREATE_REQUEST'
 });
 
-const createSuccess = (todo) => ({
+export const createSuccess = (todo) => ({
   type: 'CREATE_SUCCESS',
   todo
 });
 
-const createFailure = (failure) => ({
+export const createFailure = (failure) => ({
   type: 'CREATE_FAILURE',
   failure
 });
 
-const editRequest = () => ({
+export const editRequest = () => ({
   type: 'EDIT_REQUEST'
 });
 
-const editSuccess = (todo) => ({
+export const editSuccess = (todo) => ({
   type: 'EDIT_SUCCESS',
   todo
 });
 
-const editFailure = (failure) => ({
+export const editFailure = (failure) => ({
   type: 'EDIT_FAILURE',
   failure
 });
 
-const deleteRequest = () => ({
+export const deleteRequest = () => ({
   type: 'DELETE_REQUEST'
 });
 
-const deleteSuccess = (id) => ({
+export const deleteSuccess = (id) => ({
   type: 'DELETE_SUCCESS',
   id
 });
 
-const deleteFailure = (failure) => ({
+export const deleteFailure = (failure) => ({
   type: 'DELETE_FAILURE',
   failure
 });
 
-const toggleRequest = () => ({
+export const toggleRequest = () => ({
   type: 'TOGGLE_REQUEST'
 });
 
-const toggleSuccess = (todo) => ({
+export const toggleSuccess = (todo) => ({
   type: 'TOGGLE_SUCCESS',
   todo
 });
 
-const toggleFailure = (failure) => ({
+export const toggleFailure = (failure) => ({
   type: 'TOGGLE_FAILURE',
   failure
 });
 
-export const fetchTodos = () => (dispatch) => {
+export const fetchTodos = (testing) => (dispatch) => {
+  let url = '/api/todos';
+  if (testing) {
+    url = testing + url
+  }
   dispatch(fetchRequest());
-  return fetch('/api/todos', {
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    method: 'GET'
-  }).then(response => {
+  return fetch(url)
+  .then(response => {
     if (!response.ok) {
       return response.json().then(Promise.reject.bind(Promise));
     }
@@ -85,6 +85,7 @@ export const fetchTodos = () => (dispatch) => {
   }).then(json => {
     return dispatch(fetchSuccess(json));
   }).catch(err => {
+    console.log(err);
     return dispatch(fetchFailure('Error Fetching Todos!'));
   });
 };
