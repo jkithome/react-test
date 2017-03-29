@@ -44,7 +44,7 @@ it('Clicking edit button brings up modal', () => {
       project = 'Project'
       done = {false}
       url = 'https://www.testurl.com/images/image'
-      createdAt = "2017-03-02T23:04:38.003Z"
+      createdAt = {moment().subtract(1, 'days').format()}
       editTodo = {(id, todo) => { console.log(id, JSON.stringify(todo))}}
       toggleTodo = {(id, bool) => { console.log(id, bool)}}
       deleteTodo = {(id) => { console.log(id)}}
