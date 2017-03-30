@@ -70,10 +70,10 @@ export const toggleFailure = (failure) => ({
   failure
 });
 
-export const fetchTodos = (testing) => (dispatch) => {
+export const fetchTodos = (host) => (dispatch) => {
   let url = '/api/todos';
-  if (testing) {
-    url = testing + url
+  if (host) {
+    url = host + url
   }
   dispatch(fetchRequest());
   return fetch(url)
@@ -90,9 +90,13 @@ export const fetchTodos = (testing) => (dispatch) => {
   });
 };
 
-export const createTodo = (todo) => (dispatch) => {
+export const createTodo = (todo,host) => (dispatch) => {
+  let url = '/api/todos';
+  if (host) {
+    url = host + url
+  }
   dispatch(createRequest());
-  return fetch('/api/todos', {
+  return fetch(url, {
       headers: {
         'Content-Type': 'application/json'
       },
@@ -110,7 +114,7 @@ export const createTodo = (todo) => (dispatch) => {
     });
 };
 
-export const editTodo = (id, todo) => (dispatch) => {
+export const editTodo = (id, todo,host) => (dispatch) => {
   dispatch(editRequest);
   return fetch('/api/todo/' + id, {
     headers: {
@@ -130,7 +134,7 @@ export const editTodo = (id, todo) => (dispatch) => {
   });
 }
 
-export const toggleTodo = (id, todo) => (dispatch) => {
+export const toggleTodo = (id, todo, host) => (dispatch) => {
   dispatch(toggleRequest);
   return fetch('/api/todo/' + id, {
     headers: {
@@ -150,7 +154,7 @@ export const toggleTodo = (id, todo) => (dispatch) => {
   });
 }
 
-export const deleteTodo = (id) => (dispatch) => {
+export const deleteTodo = (id, host) => (dispatch) => {
   dispatch(deleteRequest);
   fetch('/api/todo/' + id, {
       headers: {

@@ -41,7 +41,7 @@ app.post('/api/todos', (req, res) => {
     res.json({ id, title, project, done, image, createdAt, modifiedAt })
   } catch (error) {
     console.log(error);
-    res.json({ message: 'Error creating Todo' })
+    res.status(500).json({ message: 'Error creating Todo' })
   }
 });
 
