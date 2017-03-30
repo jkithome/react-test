@@ -38,6 +38,16 @@ const createData = {
   "modifiedAt": "2017-03-18T06:45:57.337Z"
 }
 
+const editData = {
+  "id": "7ae5bfa3-f0d4-4fd3-8a9b-61676d67a3c8",
+  "title": "New Title",
+  "project": "Project",
+  "done": false,
+  "image": "https://raw.githubusercontent.com/andela-jkithome/image_files/master/images/image5.jpg",
+  "createdAt": "2017-03-02T23:04:38.003Z",
+  "modifiedAt": "2017-03-22T16:44:29.034Z"
+}
+
 describe('async actions', () => {
   afterEach(() => {
     nock.cleanAll()
@@ -106,6 +116,40 @@ describe('async actions', () => {
     const store = mockStore({ todos: [] })
 
     return store.dispatch(actions.createTodo({title:'Example',project:'Testing'}, host))
+      .then(() => { // return of async actions
+        expect(store.getActions()).toEqual(expectedActions)
+      })
+  })
+
+  it('creates EDIT_SUCCESS when editing a todo was successful', () => {
+    nock(host)
+      .put('/api/todo/' + editData.id, '{"title":"New Title"}')
+      .reply(200, editData)
+
+    const expectedActions = [
+      { type: 'EDIT_REQUEST' },
+      { type: 'EDIT_SUCCESS', todo: editData }
+    ]
+    const store = mockStore({ todos: [] })
+
+    return store.dispatch(actions.editTodo(editData.id, {title:'New Title'}, host))
+      .then(() => { // return of async actions
+        expect(store.getActions()).toEqual(expectedActions)
+      })
+  })
+
+  it('creates EDIT_FAILURE when editing a todo returns an error', () => {
+    nock(host)
+      .put('/api/todo/' + editData.id, '{"title":"New Title"}')
+      .reply(500, { message: 'Error updating Todo' })
+
+    const expectedActions = [
+      { type: 'EDIT_REQUEST' },
+      { type: 'EDIT_FAILURE', failure: 'Error Editing Todo!' }
+    ]
+    const store = mockStore({ todos: [] })
+
+    return store.dispatch(actions.editTodo(editData.id, {title:'New Title'}, host))
       .then(() => { // return of async actions
         expect(store.getActions()).toEqual(expectedActions)
       })

@@ -85,7 +85,6 @@ export const fetchTodos = (host) => (dispatch) => {
   }).then(json => {
     return dispatch(fetchSuccess(json));
   }).catch(err => {
-    console.log(err);
     return dispatch(fetchFailure('Error Fetching Todos!'));
   });
 };
@@ -115,8 +114,12 @@ export const createTodo = (todo,host) => (dispatch) => {
 };
 
 export const editTodo = (id, todo,host) => (dispatch) => {
-  dispatch(editRequest);
-  return fetch('/api/todo/' + id, {
+  let url = '/api/todo/' + id;
+  if (host) {
+    url = host + url
+  }
+  dispatch(editRequest());
+  return fetch(url, {
     headers: {
       'Content-Type': 'application/json'
     },
@@ -135,7 +138,7 @@ export const editTodo = (id, todo,host) => (dispatch) => {
 }
 
 export const toggleTodo = (id, todo, host) => (dispatch) => {
-  dispatch(toggleRequest);
+  dispatch(toggleRequest());
   return fetch('/api/todo/' + id, {
     headers: {
       'Content-Type': 'application/json'
@@ -155,7 +158,7 @@ export const toggleTodo = (id, todo, host) => (dispatch) => {
 }
 
 export const deleteTodo = (id, host) => (dispatch) => {
-  dispatch(deleteRequest);
+  dispatch(deleteRequest());
   fetch('/api/todo/' + id, {
       headers: {
         'Content-Type': 'application/json'
