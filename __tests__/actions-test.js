@@ -48,6 +48,16 @@ const editData = {
   "modifiedAt": "2017-03-22T16:44:29.034Z"
 }
 
+const toggleData = {
+  "id": "7ae5bfa3-f0d4-4fd3-8a9b-61676d67a3c8",
+  "title": "New Title",
+  "project": "Project",
+  "done": true,
+  "image": "https://raw.githubusercontent.com/andela-jkithome/image_files/master/images/image5.jpg",
+  "createdAt": "2017-03-02T23:04:38.003Z",
+  "modifiedAt": "2017-03-22T16:44:29.034Z"
+}
+
 describe('async actions', () => {
   afterEach(() => {
     nock.cleanAll()
@@ -150,6 +160,74 @@ describe('async actions', () => {
     const store = mockStore({ todos: [] })
 
     return store.dispatch(actions.editTodo(editData.id, {title:'New Title'}, host))
+      .then(() => { // return of async actions
+        expect(store.getActions()).toEqual(expectedActions)
+      })
+  })
+
+  it('creates TOGGLE_SUCCESS when changing complete status of a todo was successful', () => {
+    nock(host)
+      .put('/api/todo/' + toggleData.id, '{"done":true}')
+      .reply(200, toggleData)
+
+    const expectedActions = [
+      { type: 'TOGGLE_REQUEST' },
+      { type: 'TOGGLE_SUCCESS', todo: toggleData }
+    ]
+    const store = mockStore({ todos: [] })
+
+    return store.dispatch(actions.toggleTodo(toggleData.id, {done: true}, host))
+      .then(() => { // return of async actions
+        expect(store.getActions()).toEqual(expectedActions)
+      })
+  })
+
+  it('creates TOGGLE_FAILURE when changing complete status of a todo returns an error', () => {
+    nock(host)
+      .put('/api/todo/' + toggleData.id, '{"done":true}')
+      .reply(500, { message: 'Error updating Todo' })
+
+    const expectedActions = [
+      { type: 'TOGGLE_REQUEST' },
+      { type: 'TOGGLE_FAILURE', failure: 'Error Updating Complete Status!' }
+    ]
+    const store = mockStore({ todos: [] })
+
+    return store.dispatch(actions.toggleTodo(toggleData.id, {done:true}, host))
+      .then(() => { // return of async actions
+        expect(store.getActions()).toEqual(expectedActions)
+      })
+  })
+
+  it('creates DELETE_SUCCESS when deleting a todo was successful', () => {
+    nock(host)
+      .delete('/api/todo/' + toggleData.id)
+      .reply(200, { message: 'Todo successfully deleted' })
+
+    const expectedActions = [
+      { type: 'DELETE_REQUEST' },
+      { type: 'DELETE_SUCCESS', id: toggleData.id }
+    ]
+    const store = mockStore({ todos: [] })
+
+    return store.dispatch(actions.deleteTodo(toggleData.id, host))
+      .then(() => { // return of async actions
+        expect(store.getActions()).toEqual(expectedActions)
+      })
+  })
+
+  it('creates DELETE_FAILURE when deleting a todo returns an error', () => {
+    nock(host)
+      .delete('/api/todo/' + toggleData.id)
+      .reply(500, { message: 'Error deleting Todo' })
+
+    const expectedActions = [
+      { type: 'DELETE_REQUEST' },
+      { type: 'DELETE_FAILURE', failure: 'Error Deleting Todo!' }
+    ]
+    const store = mockStore({ todos: [] })
+
+    return store.dispatch(actions.deleteTodo(toggleData.id, host))
       .then(() => { // return of async actions
         expect(store.getActions()).toEqual(expectedActions)
       })

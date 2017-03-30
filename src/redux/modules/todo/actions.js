@@ -138,8 +138,12 @@ export const editTodo = (id, todo,host) => (dispatch) => {
 }
 
 export const toggleTodo = (id, todo, host) => (dispatch) => {
+  let url = '/api/todo/' + id;
+  if (host) {
+    url = host + url
+  }
   dispatch(toggleRequest());
-  return fetch('/api/todo/' + id, {
+  return fetch(url, {
     headers: {
       'Content-Type': 'application/json'
     },
@@ -158,8 +162,12 @@ export const toggleTodo = (id, todo, host) => (dispatch) => {
 }
 
 export const deleteTodo = (id, host) => (dispatch) => {
+  let url = '/api/todo/' + id;
+  if (host) {
+    url = host + url
+  }
   dispatch(deleteRequest());
-  fetch('/api/todo/' + id, {
+  return fetch(url, {
       headers: {
         'Content-Type': 'application/json'
       },
