@@ -52,7 +52,7 @@ export default function reducer(state = {
     case 'EDIT_REQUEST':
       return Object.assign({}, state,
         {
-          requesting: false,
+          requesting: true,
           error: null,
         }
       );
@@ -67,14 +67,14 @@ export default function reducer(state = {
     case 'TOGGLE_REQUEST':
       return Object.assign({}, state,
         {
-          requesting: false,
+          requesting: true,
           error: null
         }
       );
     case 'DELETE_REQUEST':
       return Object.assign({}, state,
         {
-          requesting: false,
+          requesting: true,
           error: null
         }
       );
