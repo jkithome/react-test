@@ -1,0 +1,238 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`todos reducer should handle CREATE_FAILURE 1`] = `
+Object {
+  "error": "Error Creating Todo!",
+  "requesting": false,
+  "todos": Array [],
+}
+`;
+
+exports[`todos reducer should handle CREATE_REQUEST 1`] = `
+Object {
+  "error": null,
+  "requesting": true,
+  "todos": Array [],
+}
+`;
+
+exports[`todos reducer should handle CREATE_SUCCESS 1`] = `
+Object {
+  "error": null,
+  "requesting": false,
+  "todos": Array [
+    Object {
+      "createdAt": "2017-03-02T23:04:38.003Z",
+      "done": false,
+      "id": "7ae5bfa3-f0d4-4fd3-8a9b-61676d67a3c8",
+      "image": "https://raw.githubusercontent.com/andela-jkithome/image_files/master/images/image5.jpg",
+      "modifiedAt": "2017-03-22T16:44:29.034Z",
+      "project": "Project",
+      "title": "Todo",
+    },
+  ],
+}
+`;
+
+exports[`todos reducer should handle DELETE_FAILURE 1`] = `
+Object {
+  "error": "Error Deleting Todo!",
+  "requesting": false,
+  "todos": Array [
+    Object {
+      "createdAt": "2017-03-02T23:04:38.003Z",
+      "done": false,
+      "id": "7ae5bfa3-f0d4-4fd3-8a9b-61676d67a3c8",
+      "image": "https://raw.githubusercontent.com/andela-jkithome/image_files/master/images/image5.jpg",
+      "modifiedAt": "2017-03-22T16:44:29.034Z",
+      "project": "Project",
+      "title": "Todo",
+    },
+  ],
+}
+`;
+
+exports[`todos reducer should handle DELETE_REQUEST 1`] = `
+Object {
+  "error": null,
+  "requesting": true,
+  "todos": Array [
+    Object {
+      "createdAt": "2017-03-02T23:04:38.003Z",
+      "done": false,
+      "id": "7ae5bfa3-f0d4-4fd3-8a9b-61676d67a3c8",
+      "image": "https://raw.githubusercontent.com/andela-jkithome/image_files/master/images/image5.jpg",
+      "modifiedAt": "2017-03-22T16:44:29.034Z",
+      "project": "Project",
+      "title": "Todo",
+    },
+  ],
+}
+`;
+
+exports[`todos reducer should handle DELETE_SUCCESS 1`] = `
+Object {
+  "error": null,
+  "requesting": false,
+  "todos": Array [],
+}
+`;
+
+exports[`todos reducer should handle EDIT_FAILURE 1`] = `
+Object {
+  "error": "Error Editing Todo!",
+  "requesting": false,
+  "todos": Array [
+    Object {
+      "createdAt": "2017-03-02T23:04:38.003Z",
+      "done": false,
+      "id": "7ae5bfa3-f0d4-4fd3-8a9b-61676d67a3c8",
+      "image": "https://raw.githubusercontent.com/andela-jkithome/image_files/master/images/image5.jpg",
+      "modifiedAt": "2017-03-22T16:44:29.034Z",
+      "project": "Project",
+      "title": "Todo",
+    },
+  ],
+}
+`;
+
+exports[`todos reducer should handle EDIT_REQUEST 1`] = `
+Object {
+  "error": null,
+  "requesting": true,
+  "todos": Array [
+    Object {
+      "createdAt": "2017-03-02T23:04:38.003Z",
+      "done": false,
+      "id": "7ae5bfa3-f0d4-4fd3-8a9b-61676d67a3c8",
+      "image": "https://raw.githubusercontent.com/andela-jkithome/image_files/master/images/image5.jpg",
+      "modifiedAt": "2017-03-22T16:44:29.034Z",
+      "project": "Project",
+      "title": "Todo",
+    },
+  ],
+}
+`;
+
+exports[`todos reducer should handle EDIT_SUCCESS 1`] = `
+Object {
+  "error": null,
+  "requesting": false,
+  "todos": Array [
+    Object {
+      "createdAt": "2017-03-02T23:04:38.003Z",
+      "done": false,
+      "id": "7ae5bfa3-f0d4-4fd3-8a9b-61676d67a3c8",
+      "image": "https://raw.githubusercontent.com/andela-jkithome/image_files/master/images/image5.jpg",
+      "modifiedAt": "2017-03-22T16:44:29.034Z",
+      "project": "Project",
+      "title": "Todo Edited",
+    },
+  ],
+}
+`;
+
+exports[`todos reducer should handle TODO_FAILURE 1`] = `
+Object {
+  "error": "Error Fetching Todos!",
+  "requesting": false,
+  "todos": Array [],
+}
+`;
+
+exports[`todos reducer should handle TODO_REQUEST 1`] = `
+Object {
+  "error": null,
+  "requesting": true,
+  "todos": Array [],
+}
+`;
+
+exports[`todos reducer should handle TODO_SUCCESS 1`] = `
+Object {
+  "error": null,
+  "requesting": false,
+  "todos": Array [
+    Object {
+      "createdAt": "2017-03-02T23:04:38.003Z",
+      "done": false,
+      "id": "7ae5bfa3-f0d4-4fd3-8a9b-61676d67a3c8",
+      "image": "https://raw.githubusercontent.com/andela-jkithome/image_files/master/images/image5.jpg",
+      "modifiedAt": "2017-03-22T16:44:29.034Z",
+      "project": "Project",
+      "title": "Todo",
+    },
+    Object {
+      "createdAt": "2017-03-18T06:45:57.337Z",
+      "done": true,
+      "id": "a9e01001-3750-4c88-9c67-ba3e68255317",
+      "image": "https://raw.githubusercontent.com/andela-jkithome/image_files/master/images/image3.jpg",
+      "modifiedAt": "2017-03-18T17:15:23.996Z",
+      "project": "New Project",
+      "title": "New Todo",
+    },
+  ],
+}
+`;
+
+exports[`todos reducer should handle TOGGLE_FAILURE 1`] = `
+Object {
+  "error": "Error Updating Complete Status!",
+  "requesting": false,
+  "todos": Array [
+    Object {
+      "createdAt": "2017-03-02T23:04:38.003Z",
+      "done": false,
+      "id": "7ae5bfa3-f0d4-4fd3-8a9b-61676d67a3c8",
+      "image": "https://raw.githubusercontent.com/andela-jkithome/image_files/master/images/image5.jpg",
+      "modifiedAt": "2017-03-22T16:44:29.034Z",
+      "project": "Project",
+      "title": "Todo",
+    },
+  ],
+}
+`;
+
+exports[`todos reducer should handle TOGGLE_REQUEST 1`] = `
+Object {
+  "error": null,
+  "requesting": true,
+  "todos": Array [
+    Object {
+      "createdAt": "2017-03-02T23:04:38.003Z",
+      "done": false,
+      "id": "7ae5bfa3-f0d4-4fd3-8a9b-61676d67a3c8",
+      "image": "https://raw.githubusercontent.com/andela-jkithome/image_files/master/images/image5.jpg",
+      "modifiedAt": "2017-03-22T16:44:29.034Z",
+      "project": "Project",
+      "title": "Todo",
+    },
+  ],
+}
+`;
+
+exports[`todos reducer should handle TOGGLE_SUCCESS 1`] = `
+Object {
+  "error": null,
+  "requesting": false,
+  "todos": Array [
+    Object {
+      "createdAt": "2017-03-02T23:04:38.003Z",
+      "done": true,
+      "id": "7ae5bfa3-f0d4-4fd3-8a9b-61676d67a3c8",
+      "image": "https://raw.githubusercontent.com/andela-jkithome/image_files/master/images/image5.jpg",
+      "modifiedAt": "2017-03-22T16:44:29.034Z",
+      "project": "Project",
+      "title": "Todo",
+    },
+  ],
+}
+`;
+
+exports[`todos reducer should return the initial state 1`] = `
+Object {
+  "error": null,
+  "requesting": false,
+  "todos": Array [],
+}
+`;
