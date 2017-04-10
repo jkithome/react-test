@@ -1,0 +1,164 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`async actions creates CREATE_FAILURE when creating a todo returns an error 1`] = `
+Array [
+  Object {
+    "type": "CREATE_REQUEST",
+  },
+  Object {
+    "failure": "Error Creating Todo!",
+    "type": "CREATE_FAILURE",
+  },
+]
+`;
+
+exports[`async actions creates CREATE_SUCCESS when creating a todo was successful 1`] = `
+Array [
+  Object {
+    "type": "CREATE_REQUEST",
+  },
+  Object {
+    "todo": Object {
+      "createdAt": "2017-03-18T06:45:57.337Z",
+      "done": false,
+      "id": "a9e01001-3750-4c88-9c67-ba3e68255317",
+      "image": "https://raw.githubusercontent.com/andela-jkithome/image_files/master/images/image3.jpg",
+      "modifiedAt": "2017-03-18T06:45:57.337Z",
+      "project": "Testing",
+      "title": "Example",
+    },
+    "type": "CREATE_SUCCESS",
+  },
+]
+`;
+
+exports[`async actions creates DELETE_FAILURE when deleting a todo returns an error 1`] = `
+Array [
+  Object {
+    "type": "DELETE_REQUEST",
+  },
+  Object {
+    "failure": "Error Deleting Todo!",
+    "type": "DELETE_FAILURE",
+  },
+]
+`;
+
+exports[`async actions creates DELETE_SUCCESS when deleting a todo was successful 1`] = `
+Array [
+  Object {
+    "type": "DELETE_REQUEST",
+  },
+  Object {
+    "id": "7ae5bfa3-f0d4-4fd3-8a9b-61676d67a3c8",
+    "type": "DELETE_SUCCESS",
+  },
+]
+`;
+
+exports[`async actions creates EDIT_FAILURE when editing a todo returns an error 1`] = `
+Array [
+  Object {
+    "type": "EDIT_REQUEST",
+  },
+  Object {
+    "failure": "Error Editing Todo!",
+    "type": "EDIT_FAILURE",
+  },
+]
+`;
+
+exports[`async actions creates EDIT_SUCCESS when editing a todo was successful 1`] = `
+Array [
+  Object {
+    "type": "EDIT_REQUEST",
+  },
+  Object {
+    "todo": Object {
+      "createdAt": "2017-03-02T23:04:38.003Z",
+      "done": false,
+      "id": "7ae5bfa3-f0d4-4fd3-8a9b-61676d67a3c8",
+      "image": "https://raw.githubusercontent.com/andela-jkithome/image_files/master/images/image5.jpg",
+      "modifiedAt": "2017-03-22T16:44:29.034Z",
+      "project": "Project",
+      "title": "New Title",
+    },
+    "type": "EDIT_SUCCESS",
+  },
+]
+`;
+
+exports[`async actions creates TODO_FAILURE when fetching todos returns an error 1`] = `
+Array [
+  Object {
+    "type": "TODO_REQUEST",
+  },
+  Object {
+    "failure": "Error Fetching Todos!",
+    "type": "TODO_FAILURE",
+  },
+]
+`;
+
+exports[`async actions creates TODO_SUCCESS when fetching todos has been done 1`] = `
+Array [
+  Object {
+    "type": "TODO_REQUEST",
+  },
+  Object {
+    "todos": Array [
+      Object {
+        "createdAt": "2017-03-02T23:04:38.003Z",
+        "done": false,
+        "id": "7ae5bfa3-f0d4-4fd3-8a9b-61676d67a3c8",
+        "image": "https://raw.githubusercontent.com/andela-jkithome/image_files/master/images/image5.jpg",
+        "modifiedAt": "2017-03-22T16:44:29.034Z",
+        "project": "Project",
+        "title": "Todo",
+      },
+      Object {
+        "createdAt": "2017-03-18T06:45:57.337Z",
+        "done": true,
+        "id": "a9e01001-3750-4c88-9c67-ba3e68255317",
+        "image": "https://raw.githubusercontent.com/andela-jkithome/image_files/master/images/image3.jpg",
+        "modifiedAt": "2017-03-18T17:15:23.996Z",
+        "project": "New Project",
+        "title": "New Todo",
+      },
+    ],
+    "type": "TODO_SUCCESS",
+  },
+]
+`;
+
+exports[`async actions creates TOGGLE_FAILURE when changing complete status of a todo returns an error 1`] = `
+Array [
+  Object {
+    "type": "TOGGLE_REQUEST",
+  },
+  Object {
+    "failure": "Error Updating Complete Status!",
+    "type": "TOGGLE_FAILURE",
+  },
+]
+`;
+
+exports[`async actions creates TOGGLE_SUCCESS when changing complete status of a todo was successful 1`] = `
+Array [
+  Object {
+    "type": "TOGGLE_REQUEST",
+  },
+  Object {
+    "todo": Object {
+      "createdAt": "2017-03-02T23:04:38.003Z",
+      "done": true,
+      "id": "7ae5bfa3-f0d4-4fd3-8a9b-61676d67a3c8",
+      "image": "https://raw.githubusercontent.com/andela-jkithome/image_files/master/images/image5.jpg",
+      "modifiedAt": "2017-03-22T16:44:29.034Z",
+      "project": "Project",
+      "title": "New Title",
+    },
+    "type": "TOGGLE_SUCCESS",
+  },
+]
+`;
