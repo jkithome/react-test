@@ -1,12 +1,13 @@
 const updateTodos = (todos, todo) => todos.map(t => t.id === todo.id ? todo : t)
 const removeTodo = (todos, id) => todos.filter(t => t.id !== id)
 
-export default function reducer(state = {
+export const initialState = { // Exporting it for test purposes
   requesting: false,
   todos: [],
   error: null,
+};
 
-}, action) {
+export default function reducer(state = initialState, action) {
   switch (action.type) {
     case 'TODO_REQUEST':
       return Object.assign({}, state,
