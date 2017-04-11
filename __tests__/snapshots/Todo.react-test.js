@@ -15,9 +15,9 @@ it('Renders correctly', () => {
       done = {false}
       url = 'https://www.testurl.com/images/image'
       createdAt = {moment().subtract(1, 'days').format()}
-      editTodo = {(id, todo) => { console.log(id, JSON.stringify(todo))}}
-      toggleTodo = {(id, bool) => { console.log(id, bool)}}
-      deleteTodo = {(id) => { console.log(id)}}
+      editTodo = {jest.fn()}
+      toggleTodo = {jest.fn()}
+      deleteTodo = {jest.fn()}
     ></Todo>
   );
   let tree = component.toJSON();
@@ -36,7 +36,7 @@ it('Renders correctly', () => {
   // expect(tree).toMatchSnapshot();
 });
 
-it('Clicking edit button brings up modal', () => {
+it('Clicking edit button brings up edit form', () => {
   const wrapper = shallow(
     <Todo
       id = '1'
@@ -45,9 +45,9 @@ it('Clicking edit button brings up modal', () => {
       done = {false}
       url = 'https://www.testurl.com/images/image'
       createdAt = {moment().subtract(1, 'days').format()}
-      editTodo = {(id, todo) => { console.log(id, JSON.stringify(todo))}}
-      toggleTodo = {(id, bool) => { console.log(id, bool)}}
-      deleteTodo = {(id) => { console.log(id)}}
+      editTodo = {jest.fn()}
+      toggleTodo = {jest.fn()}
+      deleteTodo = {jest.fn()}
     ></Todo>
     )
   wrapper.find('button.ui.green.button').simulate('click');
