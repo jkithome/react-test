@@ -1,0 +1,142 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Clicking plus button brings up create form 1`] = `
+<div
+  className="column"
+  style={
+    Object {
+      "textAlign": "center",
+    }
+  }
+>
+  <div
+    className="ui centered grid"
+  >
+    <div
+      className="eight wide column"
+      style={
+        Object {
+          "boxShadow": "0 0 0 1px #d4d4d5, 0 2px 0 0 #a5673f, 0 1px 3px 0 #d4d4d5",
+          "margin": "20px 0",
+          "padding": 0,
+        }
+      }
+    >
+      <div
+        className="header"
+        style={
+          Object {
+            "background": "#fff",
+            "borderBottom": "1px solid rgba(34,36,38,.15)",
+            "boxShadow": "none",
+            "color": "rgba(0,0,0,.85)",
+            "display": "block",
+            "fontFamily": "Lato,\\"Helvetica Neue\\",Arial,Helvetica,sans-serif",
+            "fontSize": "1.42857143rem",
+            "fontWeight": 700,
+            "lineHeight": "1.28571429em",
+            "margin": 0,
+            "padding": "1.25rem 1.5rem",
+          }
+        }
+      >
+        Create Todo
+      </div>
+      <div
+        className="content"
+        style={
+          Object {
+            "background": "#fff",
+            "display": "block",
+            "fontSize": "1em",
+            "lineHeight": 1.4,
+            "padding": "1.5rem",
+            "width": "100%",
+          }
+        }
+      >
+        <div
+          className="ui form"
+        >
+          <div
+            className="field"
+          >
+            <label>
+              Title
+            </label>
+            <input
+              name="title"
+              onChange={[Function]}
+              type="text"
+            />
+          </div>
+          <div
+            className="field"
+          >
+            <label>
+              Project
+            </label>
+            <input
+              name="project"
+              onChange={[Function]}
+              type="text"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        className="actions"
+        style={
+          Object {
+            "background": "#f9fafb",
+            "borderTop": "1px solid rgba(34,36,38,.15)",
+            "padding": "1rem 1rem",
+            "textAlign": "right",
+          }
+        }
+      >
+        <button
+          className="ui inverted green button"
+          onClick={[Function]}
+        >
+          <i
+            className="checkmark icon"
+          />
+           Create
+        </button>
+        <button
+          className="ui inverted red button"
+          onClick={[Function]}
+        >
+          <i
+            className="remove icon"
+          />
+           Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Renders correctly 1`] = `
+<div
+  className="column"
+  style={
+    Object {
+      "textAlign": "center",
+    }
+  }
+>
+  <div
+    className="ui icon button"
+    data-position="bottom center"
+    data-tooltip="Create New Todo"
+    onClick={[Function]}
+  >
+    <i
+      className="add icon"
+    />
+  </div>
+</div>
+`;
