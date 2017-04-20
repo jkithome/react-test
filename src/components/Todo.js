@@ -19,11 +19,11 @@ export class Todo extends Component {
     this.handleToggle=this.handleToggle.bind(this);
   }
 
-  handleOpen(e) {
+  handleOpen() {
     this.setState({formOpen: true});
   }
 
-  handleClose(e) {
+  handleClose() {
     this.setState({formOpen: false});
     this.setState({todo: {}});
   }
@@ -36,16 +36,16 @@ export class Todo extends Component {
     this.setState({todo: todo});
   }
 
-  handleEdit(e) {
+  handleEdit() {
     this.props.editTodo(this.props.id, this.state.todo);
     this.handleClose();
   }
 
-  handleDelete(e) {
+  handleDelete() {
     this.props.deleteTodo(this.props.id);
   }
 
-  handleToggle(e) {
+  handleToggle() {
     this.props.toggleTodo(this.props.id, {done: !this.props.done})
   }
 
