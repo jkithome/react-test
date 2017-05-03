@@ -1,6 +1,6 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import moment from 'moment'
-import { Modal, Header, Actions } from 'semantic-ui-react'
 import {connect} from 'react-redux'
 import {editTodo, toggleTodo, deleteTodo} from '../redux/modules/todo/actions'
 
