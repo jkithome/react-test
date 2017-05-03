@@ -3,7 +3,6 @@ import gutil from 'gulp-util';
 import inject from 'gulp-inject-string'
 import webpack from 'webpack';
 import webpackConfig from './webpack.config';
-import htmlreplace from 'gulp-html-replace';
 
 
 gulp.task('webpack', callback => {
@@ -20,15 +19,6 @@ gulp.task('copy:styles', () => {
   return gulp.src('./semantic/**')
     .pipe(gulp.dest('dist/vendor/semantic'));
 });
-
-// gulp.task('copy:html', function() {
-//   gulp.src('./src/index.html')
-//     .pipe(htmlreplace({
-//         'css': 'vendor/semantic/dist/semantic.min.css',
-//         'js': 'dist/bundle.js'
-//     }))
-//     .pipe(gulp.dest('dist/'));
-// });
 
 gulp.task('copy:html', function(){
   gulp.src('src/index.html')
