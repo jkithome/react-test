@@ -4,9 +4,7 @@ import {Todo} from '../src/components/Todo'
 import moment from 'moment'
 import sinon from 'sinon'
 
-const editTodo = jest.fn();
-const toggleTodo = jest.fn();
-const deleteTodo = jest.fn();
+let [editTodo, toggleTodo, deleteTodo] = new Array(3).fill(jest.fn());
 
 function shallowSetup() {
   const props = {
@@ -52,12 +50,9 @@ describe('components', () => {
     let wrapper, props_, sandbox
     beforeEach(() => {
       sandbox = sinon.sandbox.create();
-      sandbox.spy(Todo.prototype, "handleOpen");
-      sandbox.spy(Todo.prototype, "handleClose");
-      sandbox.spy(Todo.prototype, "handleFieldChange");
-      sandbox.spy(Todo.prototype, "handleEdit");
-      sandbox.spy(Todo.prototype, "handleDelete");
-      sandbox.spy(Todo.prototype, "handleToggle");
+      Object.getOwnPropertyNames(Todo.prototype).forEach(method => {
+        sandbox.spy(Todo.prototype, method);
+      })
       const { enzymeWrapper, props } = shallowSetup()
       wrapper = enzymeWrapper;
       props_ = props;
