@@ -72,9 +72,8 @@ export const toggleFailure = (failure) => ({
 
 export const fetchTodos = (host) => (dispatch) => {
   let url = '/api/todos';
-  if (host) {
-    url = host + url
-  }
+  url = host ? host + url : url;
+
   dispatch(fetchRequest());
   return fetch(url)
   .then(response => {
@@ -91,9 +90,8 @@ export const fetchTodos = (host) => (dispatch) => {
 
 export const createTodo = (todo,host) => (dispatch) => {
   let url = '/api/todos';
-  if (host) {
-    url = host + url
-  }
+  url = host ? host + url : url;
+
   dispatch(createRequest());
   return fetch(url, {
       headers: {
@@ -115,9 +113,8 @@ export const createTodo = (todo,host) => (dispatch) => {
 
 export const editTodo = (id, todo,host) => (dispatch) => {
   let url = '/api/todo/' + id;
-  if (host) {
-    url = host + url
-  }
+  url = host ? host + url : url;
+
   dispatch(editRequest());
   return fetch(url, {
     headers: {
@@ -139,9 +136,8 @@ export const editTodo = (id, todo,host) => (dispatch) => {
 
 export const toggleTodo = (id, todo, host) => (dispatch) => {
   let url = '/api/todo/' + id;
-  if (host) {
-    url = host + url
-  }
+  url = host ? host + url : url;
+
   dispatch(toggleRequest());
   return fetch(url, {
     headers: {
@@ -163,9 +159,8 @@ export const toggleTodo = (id, todo, host) => (dispatch) => {
 
 export const deleteTodo = (id, host) => (dispatch) => {
   let url = '/api/todo/' + id;
-  if (host) {
-    url = host + url
-  }
+  url = host ? host + url : url;
+
   dispatch(deleteRequest());
   return fetch(url, {
       headers: {
