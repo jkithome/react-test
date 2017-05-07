@@ -1,0 +1,170 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Renders correctly when fetching todos 1`] = `
+<div>
+  <div
+    className="ui inverted segment"
+    style={
+      Object {
+        "borderRadius": "0px",
+      }
+    }
+  >
+    <h1
+      className="ui grey inverted center aligned header"
+    >
+      <img
+        className="ui large centered image"
+        src="../images/React-icon.svg"
+      />
+      <div
+        className="content"
+      >
+        React Testing
+      </div>
+    </h1>
+  </div>
+  <div
+    className="ui centered container one column grid"
+    style={
+      Object {
+        "marginBottom": "20px",
+        "marginTop": "30px",
+      }
+    }
+  >
+    <div
+      className="column"
+    >
+      <div
+        className="ui active loader big"
+      />
+    </div>
+  </div>
+  <div
+    className="ui centered container one column grid"
+  >
+    <Connect(CreateTodo) />
+  </div>
+  <div
+    className="ui centered container three column grid"
+  >
+    <div
+      className="Column"
+      style={
+        Object {
+          "fontSize": "xx-large",
+        }
+      }
+    >
+      No Todos
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Renders correctly when there are no todos 1`] = `
+<div>
+  <div
+    className="ui inverted segment"
+    style={
+      Object {
+        "borderRadius": "0px",
+      }
+    }
+  >
+    <h1
+      className="ui grey inverted center aligned header"
+    >
+      <img
+        className="ui large centered image"
+        src="../images/React-icon.svg"
+      />
+      <div
+        className="content"
+      >
+        React Testing
+      </div>
+    </h1>
+  </div>
+  <div
+    className="ui centered container one column grid"
+  >
+    <Connect(CreateTodo) />
+  </div>
+  <div
+    className="ui centered container three column grid"
+  >
+    <div
+      className="Column"
+      style={
+        Object {
+          "fontSize": "xx-large",
+        }
+      }
+    >
+      No Todos
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Renders correctly when todos are fetched 1`] = `
+<div>
+  <div
+    className="ui inverted segment"
+    style={
+      Object {
+        "borderRadius": "0px",
+      }
+    }
+  >
+    <h1
+      className="ui grey inverted center aligned header"
+    >
+      <img
+        className="ui large centered image"
+        src="../images/React-icon.svg"
+      />
+      <div
+        className="content"
+      >
+        React Testing
+      </div>
+    </h1>
+  </div>
+  <div
+    className="ui centered container one column grid"
+    style={
+      Object {
+        "marginBottom": "20px",
+        "marginTop": "30px",
+      }
+    }
+  >
+    <div
+      className="column"
+    >
+      <div
+        className="ui active loader big"
+      />
+    </div>
+  </div>
+  <div
+    className="ui centered container one column grid"
+  >
+    <Connect(CreateTodo) />
+  </div>
+  <div
+    className="ui centered container three column grid"
+  >
+    <Connect(Todo)
+      createdAt="2017-03-02T23:04:38.003Z"
+      done={false}
+      id="7ae5bfa3-f0d4-4fd3-8a9b-61676d67a3c8"
+      project="Project"
+      title="Todo"
+    />
+  </div>
+</div>
+`;
