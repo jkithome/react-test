@@ -59,6 +59,10 @@ const toggleData = {
 }
 
 describe('async actions', () => {
+  let store;
+  beforeEach(() => {
+    store = mockStore({})
+  })
   afterEach(() => {
     nock.cleanAll()
   })
@@ -67,8 +71,6 @@ describe('async actions', () => {
     nock(host)
       .get('/api/todos')
       .reply(200, fetchTodosData)
-
-    const store = mockStore({ todos: [] })
 
     return store.dispatch(actions.fetchTodos(host))
       .then(() => { // return of async actions
@@ -81,8 +83,6 @@ describe('async actions', () => {
       .get('/api/todos')
       .reply(500, { message: 'Error creating Todo' })
 
-    const store = mockStore({ todos: [] })
-
     return store.dispatch(actions.fetchTodos(host))
       .then(() => { // return of async actions
         expect(store.getActions()).toMatchSnapshot()
@@ -93,8 +93,6 @@ describe('async actions', () => {
     nock(host)
       .post('/api/todos', '{"title":"Example","project":"Testing"}')
       .reply(200, createData)
-
-    const store = mockStore({ todos: [] })
 
     return store.dispatch(actions.createTodo({title:'Example',project:'Testing'}, host))
       .then(() => { // return of async actions
@@ -107,8 +105,6 @@ describe('async actions', () => {
       .post('/api/todos', '{"title":"Example","project":"Testing"}')
       .reply(500, { message: 'Error creating Todo' })
 
-    const store = mockStore({ todos: [] })
-
     return store.dispatch(actions.createTodo({title:'Example',project:'Testing'}, host))
       .then(() => { // return of async actions
         expect(store.getActions()).toMatchSnapshot()
@@ -119,8 +115,6 @@ describe('async actions', () => {
     nock(host)
       .put('/api/todo/' + editData.id, '{"title":"New Title"}')
       .reply(200, editData)
-
-    const store = mockStore({ todos: [] })
 
     return store.dispatch(actions.editTodo(editData.id, {title:'New Title'}, host))
       .then(() => { // return of async actions
@@ -133,8 +127,6 @@ describe('async actions', () => {
       .put('/api/todo/' + editData.id, '{"title":"New Title"}')
       .reply(500, { message: 'Error updating Todo' })
 
-    const store = mockStore({ todos: [] })
-
     return store.dispatch(actions.editTodo(editData.id, {title:'New Title'}, host))
       .then(() => { // return of async actions
         expect(store.getActions()).toMatchSnapshot()
@@ -145,8 +137,6 @@ describe('async actions', () => {
     nock(host)
       .put('/api/todo/' + toggleData.id, '{"done":true}')
       .reply(200, toggleData)
-
-    const store = mockStore({ todos: [] })
 
     return store.dispatch(actions.toggleTodo(toggleData.id, {done: true}, host))
       .then(() => { // return of async actions
@@ -159,8 +149,6 @@ describe('async actions', () => {
       .put('/api/todo/' + toggleData.id, '{"done":true}')
       .reply(500, { message: 'Error updating Todo' })
 
-    const store = mockStore({ todos: [] })
-
     return store.dispatch(actions.toggleTodo(toggleData.id, {done:true}, host))
       .then(() => { // return of async actions
         expect(store.getActions()).toMatchSnapshot()
@@ -172,8 +160,6 @@ describe('async actions', () => {
       .delete('/api/todo/' + toggleData.id)
       .reply(200, { message: 'Todo successfully deleted' })
 
-    const store = mockStore({ todos: [] })
-
     return store.dispatch(actions.deleteTodo(toggleData.id, host))
       .then(() => { // return of async actions
         expect(store.getActions()).toMatchSnapshot()
@@ -184,8 +170,6 @@ describe('async actions', () => {
     nock(host)
       .delete('/api/todo/' + toggleData.id)
       .reply(500, { message: 'Error deleting Todo' })
-
-    const store = mockStore({ todos: [] })
 
     return store.dispatch(actions.deleteTodo(toggleData.id, host))
       .then(() => { // return of async actions
