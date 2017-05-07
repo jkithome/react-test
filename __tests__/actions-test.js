@@ -59,6 +59,10 @@ const toggleData = {
 }
 
 describe('async actions', () => {
+  let store;
+  beforeEach(() => {
+    store = mockStore({})
+  })
   afterEach(() => {
     nock.cleanAll()
   })
@@ -72,7 +76,6 @@ describe('async actions', () => {
       { type: 'TODO_REQUEST' },
       { type: 'TODO_SUCCESS', todos: fetchTodosData }
     ]
-    const store = mockStore({ todos: [] })
 
     return store.dispatch(actions.fetchTodos(host))
       .then(() => { // return of async actions
@@ -89,7 +92,6 @@ describe('async actions', () => {
       { type: 'TODO_REQUEST' },
       { type: 'TODO_FAILURE', failure: 'Error Fetching Todos!' }
     ]
-    const store = mockStore({ todos: [] })
 
     return store.dispatch(actions.fetchTodos(host))
       .then(() => { // return of async actions
@@ -106,7 +108,6 @@ describe('async actions', () => {
       { type: 'CREATE_REQUEST' },
       { type: 'CREATE_SUCCESS', todo: createData }
     ]
-    const store = mockStore({ todos: [] })
 
     return store.dispatch(actions.createTodo({title:'Example',project:'Testing'}, host))
       .then(() => { // return of async actions
@@ -123,7 +124,6 @@ describe('async actions', () => {
       { type: 'CREATE_REQUEST' },
       { type: 'CREATE_FAILURE', failure: 'Error Creating Todo!' }
     ]
-    const store = mockStore({ todos: [] })
 
     return store.dispatch(actions.createTodo({title:'Example',project:'Testing'}, host))
       .then(() => { // return of async actions
@@ -140,7 +140,6 @@ describe('async actions', () => {
       { type: 'EDIT_REQUEST' },
       { type: 'EDIT_SUCCESS', todo: editData }
     ]
-    const store = mockStore({ todos: [] })
 
     return store.dispatch(actions.editTodo(editData.id, {title:'New Title'}, host))
       .then(() => { // return of async actions
@@ -157,7 +156,6 @@ describe('async actions', () => {
       { type: 'EDIT_REQUEST' },
       { type: 'EDIT_FAILURE', failure: 'Error Editing Todo!' }
     ]
-    const store = mockStore({ todos: [] })
 
     return store.dispatch(actions.editTodo(editData.id, {title:'New Title'}, host))
       .then(() => { // return of async actions
@@ -174,7 +172,6 @@ describe('async actions', () => {
       { type: 'TOGGLE_REQUEST' },
       { type: 'TOGGLE_SUCCESS', todo: toggleData }
     ]
-    const store = mockStore({ todos: [] })
 
     return store.dispatch(actions.toggleTodo(toggleData.id, {done: true}, host))
       .then(() => { // return of async actions
@@ -191,7 +188,6 @@ describe('async actions', () => {
       { type: 'TOGGLE_REQUEST' },
       { type: 'TOGGLE_FAILURE', failure: 'Error Updating Complete Status!' }
     ]
-    const store = mockStore({ todos: [] })
 
     return store.dispatch(actions.toggleTodo(toggleData.id, {done:true}, host))
       .then(() => { // return of async actions
@@ -208,7 +204,6 @@ describe('async actions', () => {
       { type: 'DELETE_REQUEST' },
       { type: 'DELETE_SUCCESS', id: toggleData.id }
     ]
-    const store = mockStore({ todos: [] })
 
     return store.dispatch(actions.deleteTodo(toggleData.id, host))
       .then(() => { // return of async actions
@@ -225,7 +220,6 @@ describe('async actions', () => {
       { type: 'DELETE_REQUEST' },
       { type: 'DELETE_FAILURE', failure: 'Error Deleting Todo!' }
     ]
-    const store = mockStore({ todos: [] })
 
     return store.dispatch(actions.deleteTodo(toggleData.id, host))
       .then(() => { // return of async actions
