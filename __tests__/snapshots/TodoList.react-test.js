@@ -42,7 +42,7 @@ it('Renders correctly when todos are fetched', () => {
   const wrapper = shallow(
     <TodoList
       todo = {{
-        requesting: true,
+        requesting: false,
         todos: [{
           id: "7ae5bfa3-f0d4-4fd3-8a9b-61676d67a3c8",
           title: "Todo",

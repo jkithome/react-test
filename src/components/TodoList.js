@@ -34,24 +34,27 @@ export class TodoList extends Component {
         <div className="ui centered container one column grid">
           <CreateTodo />
         </div>
-        <div className="ui centered container three column grid">
-          {this.props.todo.todos.length ?
-              this.props.todo.todos.map(todo => {
-                return (
-                  <Todo key={todo.id}
-                    id={todo.id}
-                    title={todo.title}
-                    project={todo.project}
-                    done={todo.done}
-                    url={todo.image}
-                    createdAt={todo.createdAt}
-                  />
-                )
-              })
-              :
-              <div className="Column" style={{fontSize: 'xx-large'}}>No Todos</div>
-          }
-        </div>
+        { !this.props.todo.requesting ?
+          <div className="ui centered container three column grid">
+            {this.props.todo.todos.length ?
+                this.props.todo.todos.map(todo => {
+                  return (
+                    <Todo key={todo.id}
+                      id={todo.id}
+                      title={todo.title}
+                      project={todo.project}
+                      done={todo.done}
+                      url={todo.image}
+                      createdAt={todo.createdAt}
+                    />
+                  )
+                })
+                :
+                <div className="Column" style={{fontSize: 'xx-large'}}>No Todos</div>
+            }
+          </div> :
+          null
+        }
       </div>
     )
   }

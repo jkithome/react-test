@@ -46,20 +46,6 @@ exports[`Renders correctly when fetching todos 1`] = `
   >
     <Connect(CreateTodo) />
   </div>
-  <div
-    className="ui centered container three column grid"
-  >
-    <div
-      className="Column"
-      style={
-        Object {
-          "fontSize": "xx-large",
-        }
-      }
-    >
-      No Todos
-    </div>
-  </div>
 </div>
 `;
 
@@ -132,23 +118,6 @@ exports[`Renders correctly when todos are fetched 1`] = `
         React Testing
       </div>
     </h1>
-  </div>
-  <div
-    className="ui centered container one column grid"
-    style={
-      Object {
-        "marginBottom": "20px",
-        "marginTop": "30px",
-      }
-    }
-  >
-    <div
-      className="column"
-    >
-      <div
-        className="ui active loader big"
-      />
-    </div>
   </div>
   <div
     className="ui centered container one column grid"
