@@ -56,12 +56,12 @@ describe('components', () => {
       const { enzymeWrapper, props } = shallowSetup()
       wrapper = enzymeWrapper;
       props_ = props;
-      editTodo.mockClear();
-      toggleTodo.mockClear();
-      deleteTodo.mockClear();
     })
     afterEach(() => {
       sandbox.restore();
+      editTodo.mockClear();
+      toggleTodo.mockClear();
+      deleteTodo.mockClear();
     });
     it('should update the state property `formOpen` and call handleOpen when edit button is clicked', () => {
       const button = wrapper.find('button').first();

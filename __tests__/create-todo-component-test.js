@@ -27,10 +27,10 @@ describe('Shallow rendered component', () => {
     })
     const { enzymeWrapper} = shallowSetup();
     wrapper = enzymeWrapper
-    createTodo.mockClear();
   })
   afterEach(() => {
     sandbox.restore();
+    createTodo.mockClear();
   });
   it('should render the create todo button', () => {
     expect(wrapper.find('div.ui.icon.button').length).toBe(1);
