@@ -22,18 +22,6 @@ it('Renders correctly', () => {
   );
   let tree = component.toJSON();
   expect(tree).toMatchSnapshot();
-
-  // // manually trigger the callback
-  // tree.props.onMouseEnter();
-  // // re-rendering
-  // tree = component.toJSON();
-  // expect(tree).toMatchSnapshot();
-
-  // // manually trigger the callback
-  // tree.props.onMouseLeave();
-  // // re-rendering
-  // tree = component.toJSON();
-  // expect(tree).toMatchSnapshot();
 });
 
 it('Clicking edit button brings up edit form', () => {
@@ -51,8 +39,5 @@ it('Clicking edit button brings up edit form', () => {
     ></Todo>
     )
   wrapper.find('button.ui.green.button').simulate('click');
-
-  // wrapper.find('#sortByName').prop('className')).toEqual('SelectedBTN');
- // });
   expect(to_json(wrapper)).toMatchSnapshot();
 })

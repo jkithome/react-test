@@ -55,22 +55,6 @@ describe('Shallow rendered component', () => {
     expect(wrapper.find('button.ui.inverted.red.button').text()).toBe(' Cancel');
     expect(CreateTodo.prototype.handleOpen.calledOnce).toBe(true);
   })
-  // it('should call handleOpen when create todo button is clicked', () => {
-  //   CreateTodo.prototype.handleOpen = jest.fn()
-  //   const { enzymeWrapper} = shallowSetup();
-  //   // console.log(wrapper.debug())
-  //   // const mock = jest.fn();
-  //   // wrapper.instance().handleOpen = mock;
-  //   // wrapper.prototype.handleOpen = mock
-  //   // wrapper.update();
-  //   const button = enzymeWrapper.find('div.ui.icon.button');
-  //   button.simulate('click');
-  //   // console.log(wrapper.debug())
-  //   // console.log(wrapper.state())
-  //   // console.log(mock)
-  //   expect(CreateTodo.prototype.handleOpen).toBeCalled();
-  //   console.log(enzymeWrapper.debug())
-  // })
   describe('Creating todos', () => {
     beforeEach(() => {
       const button = wrapper.find('div.ui.icon.button');
